@@ -1,0 +1,122 @@
+\documentclass{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{minted}
+\usepackage{courier}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{relsize}
+\usepackage{amsmath}
+
+\definecolor{red}{rgb}{0.95,0.12,0.14}
+\definecolor{green}{rgb}{0.47,0.58,0.17}
+\definecolor{darkTurquoise}{rgb}{0.18,0.65,0.74}
+\definecolor{blue}{rgb}{0.16,0,0.98}
+\definecolor{purple}{rgb}{0.65,0.03,0.69}
+
+\title{\textbf{Bitcoin Script language}}
+\author{Javier Domínguez Gómez \\
+\small{jdg@member.fsf.org} \\
+\small{Fingerprint: 94AD 19F4 9005 EEB2 3384 C20F 5BDC C668 D664 8E2B}}
+\date{v0.1.00 - Mayo 2019}
+
+\begin{document}
+\maketitle
+
+\tableofcontents{}
+
+\vspace{19mm}
+
+\section{Introducción}
+
+\section{Datos de un bloque}
+\begin{figure}[H]
+\scriptsize{\texttt{$\sim$/.bitcoin/blocks/\$ hexdump\ -C\ -s\ 93725126\ -n\ 288\ blk00116.dat}}
+    
+    \scriptsize{
+    \texttt{059621c6  \textbf{\textcolor{red}{f9 be b4 d9} \textcolor{green}{bd 53 02 00}  \textcolor{darkTurquoise}{02 00 00 00 17 97 5b 97}}  |.....S........[.|} \\
+    \texttt{059621d6  \textbf{\textcolor{darkTurquoise}{c1 8e d1 f7 e2 55 ad f2  97 59 9b 55 33 0e da b8}}  |.....U...Y.U3...|} \\
+    \texttt{059621e6  \textbf{\textcolor{darkTurquoise}{78 03 c8 17 01 00 00 00  00 00 00 00 8a 97 29 5a}}  |x.............)Z|} \\
+    \texttt{059621f6  \textbf{\textcolor{darkTurquoise}{27 47 b4 f1 a0 b3 94 8d  f3 99 03 44 c0 e1 9f a6}}  |'G.........D....|} \\
+    \texttt{05962206  \textbf{\textcolor{darkTurquoise}{b2 b9 2b 3a 19 c8 e6 ba  dc 14 17 87 35 8b 05 53}}  |..+:........5..S|} \\
+    \texttt{05962216  \textbf{\textcolor{darkTurquoise}{53 5f 01 19 48 75 08 33}  \textcolor{blue}{63} \textcolor{purple}{01 00 00 00 01 00 00}}  |S\_..Hu.3c.......|} \\
+    \texttt{05962226  \textbf{\textcolor{purple}{00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00}}  |................|} \\
+    \texttt{05962236  \textbf{\textcolor{purple}{00 00 00 00 00 00 00 00  00 00 00 00 00 00 ff ff}}  |................|} \\
+    \texttt{05962246  \textbf{\textcolor{purple}{ff ff 60 03 63 60 04 06  2f 50 32 53 48 2f 04 35}}  |..`.c`../P2SH/.5|} \\
+    \texttt{05962256  \textbf{\textcolor{purple}{8b 05 53 08 44 04 f2 53  00 00 17 e4 46 52 2c fa}}  |..S.D..S....FR,.|} \\
+    \texttt{05962266  \textbf{\textcolor{purple}{be 6d 6d 69 06 88 fb 88  6c 0d f0 c8 7c bc 7e a4}}  |.mmi....l...|.~.|} \\
+    \texttt{05962276  \textbf{\textcolor{purple}{f7 f1 b5 c0 05 0b d0 ac  37 51 cf c9 97 d9 d6 97}}  |........7Q......|} \\
+    \texttt{05962286  \textbf{\textcolor{purple}{13 28 de 04 00 00 00 00  00 00 00 48 61 70 70 79}}  |.(.........Happy|} \\
+    \texttt{05962296  \textbf{\textcolor{purple}{20 4e 59 21 20 59 6f 75  72 73 20 47 48 61 73 68}}  | NY! Yours GHash|} \\
+    \texttt{059622a6  \textbf{\textcolor{purple}{2e 49 4f 00 00 00 00 01  cb 81 31 95 00 00 00 00}}  |.IO.......1.....|} \\
+    \texttt{059622b6  \textbf{\textcolor{purple}{19 76 a9 14 80 ad 90 d4  03 58 1f a3 bf 46 08 6a}}  |.v.......X...F.j|} \\
+    \texttt{059622c6  \textbf{\textcolor{purple}{91 b2 d9 d4 12 5d b6 c1  88 ac 00 00 00 00 01 00}}  |.....]..........|} \\
+    \texttt{059622d6  \textbf{\textcolor{purple}{00 00 01 7d 67 7c de 17  3f 8c bf 43 31 27 a8 5e}}  |...\}g|..?..C1'.\textasciicircum|
+    \texttt{059622e6} ...}
+    }
+    \end{figure}
+
+\section{Datos de una transacción}
+89 bytes más adelante.
+\begin{figure}[H]
+\scriptsize{\texttt{$\sim$/.bitcoin/blocks/\$ hexdump\ -C\ -s\ 93725215\ -n\ 191\ blk00116.dat}}
+    
+    \scriptsize{
+    \texttt{0596221f  \textbf{\textcolor{purple}{01 00 00 00 01 00 00 00  00 00 00 00 00 00 00 00}}  |................|} \\
+    \texttt{0596222f  \textbf{\textcolor{purple}{00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00}}  |................|} \\
+    \texttt{0596223f  \textbf{\textcolor{purple}{00 00 00 00 00 ff ff ff  ff 60 03 63 60 04 06 2f}}  |.........`.c`../|} \\
+    \texttt{0596224f  \textbf{\textcolor{purple}{50 32 53 48 2f 04 35 8b  05 53 08 44 04 f2 53 00}}  |P2SH/.5..S.D..S.|} \\
+    \texttt{0596225f  \textbf{\textcolor{purple}{00 17 e4 46 52 2c fa be  6d 6d 69 06 88 fb 88 6c}}  |...FR,..mmi....l|} \\
+    \texttt{0596226f  \textbf{\textcolor{purple}{0d f0 c8 7c bc 7e a4 f7  f1 b5 c0 05 0b d0 ac 37}}  |...|.~.........7|} \\
+    \texttt{0596227f  \textbf{\textcolor{purple}{51 cf c9 97 d9 d6 97 13  28 de 04 00 00 00 00 00}}  |Q.......(.......|} \\
+    \texttt{0596228f  \textbf{\textcolor{purple}{00 00 48 61 70 70 79 20  4e 59 21 20 59 6f 75 72}}  |..Happy NY! Your|} \\
+    \texttt{0596229f  \textbf{\textcolor{purple}{73 20 47 48 61 73 68 2e  49 4f 00 00 00 00 01 cb}}  |s GHash.IO......|} \\
+    \texttt{059622af  \textbf{\textcolor{purple}{81 31 95 00 00 00 00 19  76 a9 14 80 ad 90 d4 03}}  |.1......v.......|} \\
+    \texttt{059622bf  \textbf{\textcolor{purple}{58 1f a3 bf 46 08 6a 91  b2 d9 d4 12 5d b6 c1 88}}  |X...F.j.....]...|} \\
+    \texttt{059622cf  \textbf{\textcolor{purple}{ac 00 00 00 00 01 00 00  00 01 7d 67 7c de 17 \ \ }}  |..........\}g|..|} \\
+    \texttt{059622de} ...}
+\end{figure}
+
+\begin{figure}[H]
+    \textbf{Versión}: \\
+    \texttt{01000000}
+    
+    \textbf{Input count}: \\
+    \texttt{01}
+    
+    \textbf{Input (TX id)}: \\
+    \texttt{0000000000000000000000000000000000000000000000000000000000000000}
+    
+    \textbf{Input (VOUT)}: \\
+    \texttt{ffffffff}
+    
+    \textbf{Input (scriptSig size)}: \\
+    \texttt{60}
+    
+    \textbf{Input}: \\
+    \texttt{0000000000000000000000000000000000000000000000000000000000000000}
+    \texttt{03636004062f503253482f04358b0553084404f253000017e446522cfabe6d6d}
+    \texttt{690688fb886c0df0c87cbc7ea4f7f1b5c0050bd0ac3751cfc997d9d6971328de}
+    \texttt{04000000000000004861707079204e592120596f7572732047486173682e494f}
+    \texttt{0000000001cb81319500}
+    
+    \textbf{Input (Sequence)}: \\
+    \texttt{00000019}
+    
+    \textbf{Output count}: \\
+    \texttt{76}
+    
+    \textbf{Output (Value)}: \\
+    \texttt{a91480ad90d40358}
+    
+    \textbf{Output (scriptPubKey size)}: \\
+    \texttt{1f}
+    
+    \textbf{Output (scriptPubKey)}: \\
+    \texttt{a3bf46086a91b2d9d4125db6c188ac0000000001000000017d}
+    
+    \textbf{Locktime}: \\
+    \texttt{677cde17}
+\end{figure}
+
+\end{document}
