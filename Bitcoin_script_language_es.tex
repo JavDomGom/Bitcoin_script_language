@@ -7,6 +7,13 @@
 \usepackage[dvipsnames]{xcolor}
 \usepackage{relsize}
 \usepackage{amsmath}
+\usepackage{titlesec}
+
+\setcounter{secnumdepth}{4}
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
 
 \definecolor{red}{rgb}{0.95,0.12,0.14}
 \definecolor{green}{rgb}{0.47,0.58,0.17}
@@ -56,10 +63,10 @@
     }
     \end{figure}
 
-\section{Datos de una transacción}
-89 bytes más adelante.
+\section{Transacción \textit{Coinbase}}
+154 bytes más adelante.
 \begin{figure}[H]
-\scriptsize{\texttt{$\sim$/.bitcoin/blocks/\$ hexdump\ -C\ -s\ 93725215\ -n\ 191\ blk00116.dat}}
+\scriptsize{\texttt{$\sim$/.bitcoin/blocks/\$ hexdump\ -C\ -s\ 93725215\ -n\ 154\ blk00116.dat}}
     
     \scriptsize{
     \texttt{0596221f  \textbf{\textcolor{purple}{01 00 00 00 01 00 00 00  00 00 00 00 00 00 00 00}}  |................|} \\
@@ -71,52 +78,98 @@
     \texttt{0596227f  \textbf{\textcolor{purple}{51 cf c9 97 d9 d6 97 13  28 de 04 00 00 00 00 00}}  |Q.......(.......|} \\
     \texttt{0596228f  \textbf{\textcolor{purple}{00 00 48 61 70 70 79 20  4e 59 21 20 59 6f 75 72}}  |..Happy NY! Your|} \\
     \texttt{0596229f  \textbf{\textcolor{purple}{73 20 47 48 61 73 68 2e  49 4f 00 00 00 00 01 cb}}  |s GHash.IO......|} \\
-    \texttt{059622af  \textbf{\textcolor{purple}{81 31 95 00 00 00 00 19  76 a9 14 80 ad 90 d4 03}}  |.1......v.......|} \\
-    \texttt{059622bf  \textbf{\textcolor{purple}{58 1f a3 bf 46 08 6a 91  b2 d9 d4 12 5d b6 c1 88}}  |X...F.j.....]...|} \\
-    \texttt{059622cf  \textbf{\textcolor{purple}{ac 00 00 00 00 01 00 00  00 01 7d 67 7c de 17 \ \ }}  |..........\}g|..|} \\
+    \texttt{059622af  \textbf{\textcolor{purple}{81 31 95 00 00 00 00 19  76 a9 \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }}  |.1......v.|} \\
     \texttt{059622de} ...}
 \end{figure}
 
-\begin{figure}[H]
-    \textbf{Versión}: \\
-    \texttt{01000000}
+    \subsubsection{Versión}
+    Es el número de versión para el registro de las transacciones, se trata de un número entero con una longitud de 4 \textit{bytes} en formato \textit{Little-Endian} que actualmente tiene un valor hexadecimal de \texttt{0x01000000} o 1 en base decimal.
+    \begin{figure}[H]
+        \texttt{0x01000000}
+    \end{figure}
     
-    \textbf{Input count}: \\
-    \texttt{01}
+    \subsubsection{Input count}
+    Esta variable es un tiene por valor un número entero positivo de longitud variable, desde 1 hasta 9 \textit{bytes}, y representa el número de entradas o \textit{inputs} que tiene la transacción.
+    \begin{figure}[H]
+        \texttt{0x01}
+    \end{figure}
     
-    \textbf{Input (TX id)}: \\
-    \texttt{0000000000000000000000000000000000000000000000000000000000000000}
+    \subsubsection{Input}
     
-    \textbf{Input (VOUT)}: \\
-    \texttt{ffffffff}
+    \paragraph{TXID}
+    Se trata del un número identificativo o \textit{id} de 32 bytes que representa la transacción en el bloque. Una de las características que diferencia a una transacción de tipo \textit{Coinbase} del resto es que en las transacciones \textit{Coinbase} el valor de TXID es un numero hexadecimal con valor cero.
+    \begin{figure}[H]
+        \texttt{0x0000000000000000000000000000000} \\
+        \texttt{000000000000000000000000000000000}
+    \end{figure}
+    En una transacción corriente este dato se obtiene aplicando la función hash SHA-256 dos veces a los datos de la transacción en formato \textit{Little-Endian}.
     
-    \textbf{Input (scriptSig size)}: \\
-    \texttt{60}
+    \paragraph{VOUT}
+    En Bitcoin todas las salidas u \textit{outputs} de una transacción se almacenan en un dato de tipo vector. VOUT es un número hexadecimal con una longitud de 4 bytes que representa el índice de las salidas u \textit{outputs} de una transacción en dicho vector. Otra de las características de una transacción de tipo \textit{Coinbase} es que el valor para VOUT es siempre \texttt{0xffffffff}, el número de 4 bytes de más alto valor.
+    \begin{figure}[H]
+        \texttt{0xffffffff}
+    \end{figure}
     
-    \textbf{Input}: \\
-    \texttt{0000000000000000000000000000000000000000000000000000000000000000}
-    \texttt{03636004062f503253482f04358b0553084404f253000017e446522cfabe6d6d}
-    \texttt{690688fb886c0df0c87cbc7ea4f7f1b5c0050bd0ac3751cfc997d9d6971328de}
-    \texttt{04000000000000004861707079204e592120596f7572732047486173682e494f}
-    \texttt{0000000001cb81319500}
+    \paragraph{scriptSig size}
+    Esta variable es un tiene por valor un número hexadecimal de longitud variable, desde 1 hasta 9 \textit{bytes} que representa el tamaño en \textit{bytes} que tendrán los datos almacenados en \textit{scriptSig}.
+    \begin{figure}[H]
+        \texttt{0x60}
+    \end{figure}
+    En este caso el tamaño es de \texttt{0x60}, que tras convertirlo a base decimal son 96 bytes. Para este dato existe límite de tamaño que actualmente es de 1650 \textit{bytes}.
     
-    \textbf{Input (Sequence)}: \\
-    \texttt{00000019}
+    \paragraph{scriptSig}
+    Se trata de un dato de de longitud variable, en este caso tiene una longitud de 96 bytes pero podría contener más o menos información. A menudo lo utilizan los mineros para incluir mensajes de texto personalizados empleando caracteres ASCII, normalmente el nombre del minero o del pool de minería que ha resuelto el el hash válido para poder minar el bloque.
+    \begin{figure}[H]
+        \texttt{0x03636004062f503253482f04358b0553084404f253000017e446522c} \\
+        \texttt{fabe6d6d690688fb886c0df0c87cbc7ea4f7f1b5c0050bd0ac3751cfc9}
+        \texttt{97d9d6971328de04000000000000004861707079204e592120596f7572}
+        \texttt{732047486173682e494f}
+    \end{figure}
     
-    \textbf{Output count}: \\
-    \texttt{76}
+    En este caso contiene el siguiente mensaje ASCII:
+    \begin{figure}[H]
+    \centering
+        \texttt{`.c`../P2SH/.5..S.D..S....FR,..mmi....l...|.\textasciicircum....}
+        \texttt{......7Q.......(.........Happy NY! Yours GHash.IO}
+    \end{figure}
     
-    \textbf{Output (Value)}: \\
-    \texttt{a91480ad90d40358}
+    Para evitar que varias transacciones de tipo \textit{Coinbase} pertenecientes a diferentes bloques tengan el mismo valor en TXID se decidió implementar mediante la propuesta BIP34\footnote{https://github.com/bitcoin/bips/blob/master/bip-0034.mediawiki} un sistema que añade al inicio del valor de \textit{scriptSig} un bloque de 4 bytes, dividido en dos secciones:
     
-    \textbf{Output (scriptPubKey size)}: \\
-    \texttt{1f}
+    \begin{itemize}
+    \item La primera es una constante\footnote{https://en.bitcoin.it/wiki/Script\#Constants} de 1 \textit{byte} de longitud que representa un OP\_CODE, en este caso el valor \texttt{0x03} indica que el siguiente OP\_CODE contiene datos que se han de colocar en la pila.
+    \item La segunda sección es un dato de 3 bytes en formato \textit{Little-Endian} que representan la altura o el número del bloque al que pertenece la transacción \textit{Coinbase}, en este caso \texttt{0x636004}.
+    \end{itemize}
     
-    \textbf{Output (scriptPubKey)}: \\
-    \texttt{a3bf46086a91b2d9d4125db6c188ac0000000001000000017d}
+    La transacción \textit{Coinbase} que se ha utilizado en este ejemplo pertenece al bloque número \texttt{\#}286819 de la cadena de bloques de \textit{Bitcoin} en la red principal \textit{mainnet}. Si se convierten los 3 bytes \texttt{0x636004} a formato \textit{Big-Endian} se obtiene el valor hexadecimal \texttt{0x046063}, que en base 10 o decimal es el número 286819 y se corresponde con el número de bloque al que pertenece esta transacción.
     
-    \textbf{Locktime}: \\
-    \texttt{677cde17}
-\end{figure}
-
+    \paragraph{Sequence}
+    \begin{figure}[H]
+        \texttt{0x00000048}
+    \end{figure}
+    
+    \subsubsection{Output count}
+    \begin{figure}[H]
+        \texttt{0x61}
+    \end{figure}
+    
+    \subsubsection{Output (Value)}
+    \begin{figure}[H]
+        \texttt{0x707079204e592120}
+    \end{figure}
+    
+    \subsubsection{Output (scriptPubKey size)}
+    \begin{figure}[H]
+        \texttt{0x1f}
+    \end{figure}
+    
+    \subsubsection{Output (scriptPubKey)}
+    \begin{figure}[H]
+        \texttt{0x596f7572732047486173682e494f0000000001cb813195000000}
+    \end{figure}
+    
+    \subsubsection{Locktime}
+    \begin{figure}[H]
+        \texttt{0x001976a9}
+    \end{figure}
+    
 \end{document}
