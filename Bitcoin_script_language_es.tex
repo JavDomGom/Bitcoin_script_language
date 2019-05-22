@@ -143,6 +143,7 @@
     La transacción \textit{Coinbase} que se ha utilizado en este ejemplo pertenece al bloque número \texttt{\#}286819 de la cadena de bloques de \textit{Bitcoin} en la red principal \textit{mainnet}. Si se convierten los 3 bytes \texttt{0x636004} a formato \textit{Big-Endian} se obtiene el valor hexadecimal \texttt{0x046063}, que en base 10 o decimal es el número 286819 y se corresponde con el número de bloque al que pertenece esta transacción.
     
     \paragraph{Sequence}
+    Se trata de un número de 4 bytes de longitud, se utiliza para permitir que las transacciones no confirmadas que tengan un \textit{Locktime} se actualicen antes de darlas por finalizadas o confirmadas. También se utiliza para desactivar el \textit{Locktime} de la transacción.
     \begin{figure}[H]
         \texttt{0x00000048}
     \end{figure}
