@@ -64,24 +64,25 @@
     \end{figure}
 
 \section{Transacción \textit{Coinbase}}
-154 bytes más adelante.
-\begin{figure}[H]
-\scriptsize{\texttt{$\sim$/.bitcoin/blocks/\$ hexdump\ -C\ -s\ 93725215\ -n\ 154\ blk00116.dat}}
+    En el protocolo Bitcoin todos los bloques de la cadena de bloques contienen la misma estructura de datos para almacenar la información segmentada y ordenada en diferentes partes. La transacción \textit{Coinbase} es la primera transacción de cada bloque, es un espacio reservado para almacenar información relativa a la recompensa final por minar el bloque candidato e información sobre comisiones adicionales en cada una de las transacciones que conformarán finalmente el bloque. Siguiendo con el ejemplo del bloque \texttt{\#}286819, podremos encontrar el inicio de la transacción \textit{Coinbase} a partir del \textit{byte} número 93.725.215, en el \textit{offset} \texttt{0x0596221f}, y abarca los siguientes 154 \textit{bytes} tal y como se muestra a continuación.
+    \begin{figure}[H]
+    \scriptsize{\texttt{$\sim$/.bitcoin/blocks/\$ hexdump\ -C\ -s\ 93725215\ -n\ 154\ blk00116.dat}}
+        
+        \scriptsize{
+        \texttt{0596221f  \textbf{\textcolor{purple}{01 00 00 00 01 00 00 00  00 00 00 00 00 00 00 00}}  |................|} \\
+        \texttt{0596222f  \textbf{\textcolor{purple}{00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00}}  |................|} \\
+        \texttt{0596223f  \textbf{\textcolor{purple}{00 00 00 00 00 ff ff ff  ff 60 03 63 60 04 06 2f}}  |.........`.c`../|} \\
+        \texttt{0596224f  \textbf{\textcolor{purple}{50 32 53 48 2f 04 35 8b  05 53 08 44 04 f2 53 00}}  |P2SH/.5..S.D..S.|} \\
+        \texttt{0596225f  \textbf{\textcolor{purple}{00 17 e4 46 52 2c fa be  6d 6d 69 06 88 fb 88 6c}}  |...FR,..mmi....l|} \\
+        \texttt{0596226f  \textbf{\textcolor{purple}{0d f0 c8 7c bc 7e a4 f7  f1 b5 c0 05 0b d0 ac 37}}  |...|.~.........7|} \\
+        \texttt{0596227f  \textbf{\textcolor{purple}{51 cf c9 97 d9 d6 97 13  28 de 04 00 00 00 00 00}}  |Q.......(.......|} \\
+        \texttt{0596228f  \textbf{\textcolor{purple}{00 00 48 61 70 70 79 20  4e 59 21 20 59 6f 75 72}}  |..Happy NY! Your|} \\
+        \texttt{0596229f  \textbf{\textcolor{purple}{73 20 47 48 61 73 68 2e  49 4f 00 00 00 00 01 cb}}  |s GHash.IO......|} \\
+        \texttt{059622af  \textbf{\textcolor{purple}{81 31 95 00 00 00 00 19  76 a9 \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }}  |.1......v.|} \\
+        \texttt{059622de} ...}
+    \end{figure}
+    En los siguientes puntos se explica en detalle uno a uno cada segmento de \textit{bytes} de esta transacción \textit{Coinbase}.
     
-    \scriptsize{
-    \texttt{0596221f  \textbf{\textcolor{purple}{01 00 00 00 01 00 00 00  00 00 00 00 00 00 00 00}}  |................|} \\
-    \texttt{0596222f  \textbf{\textcolor{purple}{00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00}}  |................|} \\
-    \texttt{0596223f  \textbf{\textcolor{purple}{00 00 00 00 00 ff ff ff  ff 60 03 63 60 04 06 2f}}  |.........`.c`../|} \\
-    \texttt{0596224f  \textbf{\textcolor{purple}{50 32 53 48 2f 04 35 8b  05 53 08 44 04 f2 53 00}}  |P2SH/.5..S.D..S.|} \\
-    \texttt{0596225f  \textbf{\textcolor{purple}{00 17 e4 46 52 2c fa be  6d 6d 69 06 88 fb 88 6c}}  |...FR,..mmi....l|} \\
-    \texttt{0596226f  \textbf{\textcolor{purple}{0d f0 c8 7c bc 7e a4 f7  f1 b5 c0 05 0b d0 ac 37}}  |...|.~.........7|} \\
-    \texttt{0596227f  \textbf{\textcolor{purple}{51 cf c9 97 d9 d6 97 13  28 de 04 00 00 00 00 00}}  |Q.......(.......|} \\
-    \texttt{0596228f  \textbf{\textcolor{purple}{00 00 48 61 70 70 79 20  4e 59 21 20 59 6f 75 72}}  |..Happy NY! Your|} \\
-    \texttt{0596229f  \textbf{\textcolor{purple}{73 20 47 48 61 73 68 2e  49 4f 00 00 00 00 01 cb}}  |s GHash.IO......|} \\
-    \texttt{059622af  \textbf{\textcolor{purple}{81 31 95 00 00 00 00 19  76 a9 \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }}  |.1......v.|} \\
-    \texttt{059622de} ...}
-\end{figure}
-
     \subsubsection{Versión}
     Es el número de versión para el registro de las transacciones, se trata de un número entero con una longitud de 4 \textit{bytes} en formato \textit{Little-Endian} que actualmente tiene un valor hexadecimal de \texttt{0x01000000} o 1 en base decimal.
     \begin{figure}[H]
