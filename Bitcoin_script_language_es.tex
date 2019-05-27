@@ -64,7 +64,7 @@
     \end{figure}
 
 \section{Transacción \textit{Coinbase}}
-    En el protocolo Bitcoin todos los bloques de la cadena de bloques contienen la misma estructura de datos para almacenar la información segmentada y ordenada en diferentes partes. La transacción \textit{Coinbase} es la primera transacción de cada bloque, es un espacio reservado para almacenar información relativa a la recompensa final por minar el bloque candidato e información sobre comisiones adicionales en cada una de las transacciones que conformarán finalmente el bloque. Siguiendo con el ejemplo del bloque \texttt{\#}286819, podremos encontrar el inicio de la transacción \textit{Coinbase} a partir del \textit{byte} número 93.725.215, en el \textit{offset} \texttt{0x0596221f}, y en este caso abarca los siguientes 159 \textit{bytes} tal y como se muestra a continuación.
+    En el protocolo Bitcoin todos los bloques de la cadena de bloques contienen la misma estructura de datos para almacenar la información segmentada y ordenada en diferentes partes. La transacción \textit{Coinbase} es la primera transacción de cada bloque, es un espacio reservado para almacenar información relativa a la recompensa final por minar el bloque candidato y toda la información sobre comisiones adicionales en cada una de las transacciones que conformarán finalmente el bloque. Siguiendo con el ejemplo del bloque \texttt{\#}286819, podremos encontrar el inicio de la transacción \textit{Coinbase} a partir del \textit{byte} número 93.725.215, en el \textit{offset} \texttt{0x0596221f}, y en este caso abarca los siguientes 159 \textit{bytes} tal y como se muestra a continuación.
     \begin{figure}[H]
     \scriptsize{\texttt{$\sim$/.bitcoin/blocks/\$ hexdump\ -C\ -s\ 93725215\ -n\ 159\ blk00116.dat}}
         
@@ -169,7 +169,7 @@
     En este caso el tamaño es de \texttt{0x1f}, que tras convertirlo a base decimal son 31 \textit{bytes}.
     
     \subsubsection{Output (scriptPubKey)}
-    Se trata de un dato de de longitud variable, en este caso tiene una longitud de 31 \textit{bytes} pero podría contener más o menos información. 
+    Es un dato de longitud variable, en este caso tiene una longitud de 31 \textit{bytes} pero podría contener más o menos información. Se trata de un \textit{script} también llamado \textit{locking script} que implementa un mecanismo de bloqueo para un \textit{output} o salida, de modo que esta no pueda ser gastada hasta que no se desbloquee tras cumplirse una serie de condiciones, la mayoría de la veces ser el poseedor de la clave privada que puede desbloquear el \textit{script} en el que se utiliza una clave pública.
     \begin{figure}[H]
         \texttt{0x596f7572732047486173682e494f0000000001cb8131950000000019} \\
         \texttt{76a914}
