@@ -119,7 +119,7 @@
     En este caso el tamaño es de \texttt{0x60}, que tras convertirlo a base decimal son 96 bytes. Para este dato existe límite de tamaño que actualmente es de 1650 \textit{bytes}.
     
     \paragraph{scriptSig}
-    Se trata de un dato de de longitud variable, en este caso tiene una longitud de 96 bytes pero podría contener más o menos información. A menudo lo utilizan los mineros para incluir mensajes de texto personalizados empleando caracteres ASCII, normalmente el nombre del minero o del pool de minería que ha resuelto el el hash válido para poder minar el bloque.
+    Se trata de un dato de de longitud variable, en este caso tiene una longitud de 96 bytes pero podría contener más o menos información, dependiendo de las operaciones que se quieran realizar en el \textit{script} o el mensaje que se quiera incluir. A menudo lo utilizan los mineros para incluir mensajes de texto personalizados empleando caracteres ASCII, normalmente el nombre del minero o del pool de minería que ha resuelto el el hash válido para poder minar el bloque. En este caso la transacción \textit{Coinbase} contiene el siguiente valor para el segmento de datos \textit{scriptSig}.
     \begin{figure}[H]
         \texttt{0x03636004062f503253482f04358b0553084404f253000017e446522c} \\
         \texttt{fabe6d6d690688fb886c0df0c87cbc7ea4f7f1b5c0050bd0ac3751cfc9}
@@ -127,17 +127,39 @@
         \texttt{732047486173682e494f}
     \end{figure}
     
-    En este caso contiene el siguiente mensaje ASCII:
+    En una representación de carácteres ASCII se vería de la siguiente forma:
     \begin{figure}[H]
     \centering
         \texttt{`.c`../P2SH/.5..S.D..S....FR,..mmi....l...|.\textasciicircum....}
         \texttt{......7Q.......(.........Happy NY! Yours GHash.IO}
     \end{figure}
     
+    Realmente esta cadena de 96 bytes es una secuencia de instrucciones ordenadas en lenguaje \textit{Bitcoin Script} o simplemente \textit{script}. En la siguiente muestra se pueden ver los diferentes segmentos en los que se divide la cadena hexadecimal de \textit{scriptSig} en el caso concreto de esta transacción de tipo \textit{Coinbase} de ejemplo.
+    
+    \begin{figure}[H]
+        $\begin{array}{lcl}
+            \texttt{0x03} & \Rightarrow & \textbf{\texttt{OP\_PUSHBYTES\_3}} \\
+            \texttt{0x636004} & \Rightarrow & \texttt{0x636004}\\
+            \texttt{0x06} & \Rightarrow & \textbf{\texttt{OP\_PUSHBYTES\_6}} \\
+            \texttt{0x2f503253482f} & \Rightarrow & \texttt{0x2f503253482f} \\
+            \texttt{0x04} & \Rightarrow & \textbf{\texttt{OP\_PUSHBYTES\_4}} \\
+            \texttt{0x358b0553} & \Rightarrow & \texttt{0x358b0553} \\
+            \texttt{0x08} & \Rightarrow & \textbf{\texttt{OP\_PUSHBYTES\_8}} \\
+            \texttt{0x4404f253000017e4} & \Rightarrow & \texttt{0x4404f253000017e4} \\
+            \texttt{0x46} & \Rightarrow & \textbf{\texttt{OP\_PUSHBYTES\_70}} \\
+            \texttt{0x522cfabe6d6d690688fb886c} & & \texttt{0x522cfabe6d6d690688fb886c} \\
+            \texttt{0df0c87cbc7ea4f7f1b5c0050b} & & \texttt{0df0c87cbc7ea4f7f1b5c0050b} \\
+            \texttt{d0ac3751cfc997d9d6971328de} & \Rightarrow & \texttt{d0ac3751cfc997d9d6971328de} \\
+            \texttt{04000000000000004861707079} & & \texttt{04000000000000004861707079} \\
+            \texttt{204e592120596f757273204748} & & \texttt{204e592120596f757273204748} \\
+            \texttt{6173682e494f} & & \texttt{6173682e494f}
+        \end{array}$
+    \end{figure}
+    
     Para evitar que varias transacciones de tipo \textit{Coinbase} pertenecientes a diferentes bloques tengan el mismo valor en TXID se decidió implementar mediante la propuesta BIP34\footnote{https://github.com/bitcoin/bips/blob/master/bip-0034.mediawiki} un sistema que añade al inicio del valor de \textit{scriptSig} un bloque de 4 bytes, dividido en dos secciones:
     
     \begin{itemize}
-    \item La primera es una constante\footnote{https://en.bitcoin.it/wiki/Script\#Constants} de 1 \textit{byte} de longitud que representa un OP\_CODE, en este caso el valor \texttt{0x03} indica que el siguiente OP\_CODE contiene datos que se han de colocar en la pila.
+    \item La primera es una constante\footnote{https://en.bitcoin.it/wiki/Script\#Constants} de 1 \textit{byte} de longitud que representa un OP\_CODE, en este caso con valor \texttt{0x03}, e indica que el siguiente dato que se va a colocar en la pila tiene una longitud de 3 bytes. Para ello se utiliza el OP\_CODE \textbf{\texttt{OP\_PUSHBYTES\_3}}.
     \item La segunda sección es un dato de 3 bytes en formato \textit{Little-Endian} que representan la altura o el número del bloque al que pertenece la transacción \textit{Coinbase}, en este caso \texttt{0x636004}.
     \end{itemize}
     
