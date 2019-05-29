@@ -64,9 +64,9 @@
     \end{figure}
 
 \section{Transacción \textit{Coinbase}}
-    En el protocolo Bitcoin todos los bloques de la cadena de bloques contienen la misma estructura de datos para almacenar la información segmentada y ordenada en diferentes partes. La transacción \textit{Coinbase} es la primera transacción de cada bloque, es un espacio reservado para almacenar información relativa a la recompensa final por minar el bloque candidato y toda la información sobre comisiones adicionales en cada una de las transacciones que conformarán finalmente el bloque. Siguiendo con el ejemplo del bloque \texttt{\#}286819, podremos encontrar el inicio de la transacción \textit{Coinbase} a partir del \textit{byte} número 93.725.215, en el \textit{offset} \texttt{0x0596221f}, y en este caso abarca los siguientes 159 \textit{bytes} tal y como se muestra a continuación.
+    En el protocolo Bitcoin todos los bloques de la cadena de bloques contienen la misma estructura de datos para almacenar la información segmentada y ordenada en diferentes partes. La transacción \textit{Coinbase} es la primera transacción de cada bloque, es un espacio reservado para almacenar información relativa a la recompensa final por minar el bloque candidato y toda la información sobre comisiones adicionales en cada una de las transacciones que conformarán finalmente el bloque. Siguiendo con el ejemplo del bloque \texttt{\#}286819, podremos encontrar el inicio de la transacción \textit{Coinbase} a partir del \textit{byte} número 93.725.215, en el \textit{offset} \texttt{0x0596221f}, y en este caso abarca los siguientes 181 \textit{bytes} tal y como se muestra a continuación.
     \begin{figure}[H]
-    \scriptsize{\texttt{$\sim$/.bitcoin/blocks/\$ hexdump\ -C\ -s\ 93725215\ -n\ 159\ blk00116.dat}}
+    \scriptsize{\texttt{$\sim$/.bitcoin/blocks/\$ hexdump\ -C\ -s\ 93725215\ -n\ 181\ blk00116.dat}}
         
         \scriptsize{
         \texttt{0596221f \textbf{\textcolor{purple}{01 00 00 00 01 00 00 00  00 00 00 00 00 00 00 00}} |................|} \\
@@ -78,8 +78,9 @@
         \texttt{0596227f \textbf{\textcolor{purple}{51 cf c9 97 d9 d6 97 13  28 de 04 00 00 00 00 00}} |Q.......(.......|} \\
         \texttt{0596228f \textbf{\textcolor{purple}{00 00 48 61 70 70 79 20  4e 59 21 20 59 6f 75 72}} |..Happy NY! Your|} \\
         \texttt{0596229f \textbf{\textcolor{purple}{73 20 47 48 61 73 68 2e  49 4f 00 00 00 00 01 cb}} |s GHash.IO......|} \\
-        \texttt{059622af \textbf{\textcolor{purple}{81 31 95 00 00 00 00 19  76 a9 14 80 ad 90 d4 \ \ }} |.1......v......|} \\
-        \texttt{059622de} ...}
+        \texttt{059622af \textbf{\textcolor{purple}{81 31 95 00 00 00 00 19  76 a9 14 80 ad 90 d4 03}} |.1......v.......|} \\
+        \texttt{059622bf \textbf{\textcolor{purple}{58 1f a3 bf 46 08 6a 91  b2 d9 d4 12 5d b6 c1 88}} |X...F.j.....]...|} \\
+        \texttt{059622cf \textbf{\textcolor{purple}{ac 00 00 00 00 \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }} |.....|}}
     \end{figure}
     En los siguientes puntos se explica en detalle uno a uno cada segmento de \textit{bytes} de esta transacción \textit{Coinbase}.
     
@@ -98,7 +99,7 @@
     \subsubsection{Input}
     
     \paragraph{TXID}
-    Se trata del un número identificativo o \textit{id} de 32 bytes que representa la transacción en el bloque. Una de las características que diferencia a una transacción de tipo \textit{Coinbase} del resto es que en las transacciones \textit{Coinbase} el valor de TXID es un numero hexadecimal con valor cero.
+    Se trata del un número identificativo o \textit{id} de 32 bytes que representa la transacción previa en el bloque. Una de las características que diferencia a una transacción de tipo \textit{Coinbase} del resto es que en las transacciones \textit{Coinbase} el valor de TXID es un numero hexadecimal con valor cero, pues al ser la primera transacción del bloque no existe una transacción previa.
     \begin{figure}[H]
         \texttt{0x0000000000000000000000000000000} \\
         \texttt{000000000000000000000000000000000}
@@ -168,38 +169,38 @@
     \paragraph{Sequence}
     Se trata de un número de 4 bytes de longitud, se utiliza para permitir que las transacciones no confirmadas que tengan un \textit{Locktime} se actualicen antes de darlas por finalizadas o confirmadas. También se utiliza para desactivar el \textit{Locktime} de la transacción.
     \begin{figure}[H]
-        \texttt{0x00000048}
+        \texttt{0x00000000}
     \end{figure}
     
     \subsubsection{Output count}
     Esta variable es un tiene por valor un número entero positivo de longitud variable, desde 1 hasta 9 \textit{bytes}, y representa el número de salidas u \textit{outputs} que tiene la transacción.
     \begin{figure}[H]
-        \texttt{0x61}
+        \texttt{0x01}
     \end{figure}
     
     \subsubsection{Output (Value)}
     Se trata de un número de 8 bytes de longitud que representa la cantidad de satoshis\footnote{1 bitcoin = 100.000.000 satoshis} que podrán ser reclamados en futuras transacciones como \textit{input} para ser gastados de nuevo.
     \begin{figure}[H]
-        \texttt{0x707079204e592120}
+        \texttt{0xcb81319500000000}
     \end{figure}
     
     \subsubsection{Output (scriptPubKey size)}
     Esta variable es un tiene por valor un número hexadecimal de longitud variable, desde 1 hasta 9 \textit{bytes} que representa el tamaño en \textit{bytes} que tendrán los datos almacenados en \textit{scriptPubKey}.
     \begin{figure}[H]
-        \texttt{0x1f}
+        \texttt{0x19}
     \end{figure}
-    En este caso el tamaño es de \texttt{0x1f}, que tras convertirlo a base decimal son 31 \textit{bytes}.
+    En este caso el tamaño es de \texttt{0x19}, que tras convertirlo a base decimal son 25 \textit{bytes}.
     
     \subsubsection{Output (scriptPubKey)}
-    Es un dato de longitud variable, en este caso tiene una longitud de 31 \textit{bytes} pero podría contener más o menos información. Se trata de un \textit{script} también llamado \textit{locking script} que implementa un mecanismo de bloqueo para un \textit{output} o salida, de modo que esta no pueda ser gastada hasta que no se desbloquee tras cumplirse una serie de condiciones, la mayoría de la veces ser el poseedor de la clave privada que puede desbloquear el \textit{script} en el que se utiliza una clave pública.
+    Es un dato de longitud variable, en este caso tiene una longitud de 25 \textit{bytes} pero podría contener más o menos información. Se trata de un \textit{script} también llamado \textit{locking script} que implementa un mecanismo de bloqueo para un \textit{output} o salida, de modo que esta no pueda ser gastada hasta que no se desbloquee tras cumplirse una serie de condiciones, la mayoría de la veces ser el poseedor de la clave privada que puede desbloquear el \textit{script} en el que se utiliza una clave pública.
     \begin{figure}[H]
-        \texttt{0x596f7572732047486173682e494f0000000001cb8131950000000019} \\
+        \texttt{0x76a91480ad90d403581fa3bf46086a91b2d9d4125db6c188ac} \\
         \texttt{76a914}
     \end{figure}
     
     \subsubsection{Locktime}
     \begin{figure}[H]
-        \texttt{0x80ad90d4}
+        \texttt{0x00000000}
     \end{figure}
     
 \end{document}
