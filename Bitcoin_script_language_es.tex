@@ -135,7 +135,7 @@
         \texttt{......7Q.......(.........Happy NY! Yours GHash.IO}
     \end{figure}
     
-    Realmente esta cadena de 96 bytes es una secuencia de instrucciones ordenadas en lenguaje \textit{Bitcoin Script} o simplemente \textit{script}. En la siguiente muestra se pueden ver los diferentes segmentos en los que se divide la cadena hexadecimal de \textit{scriptSig} en el caso concreto de esta transacción de tipo \textit{Coinbase} de ejemplo.
+    Realmente esta cadena de 96 \textit{bytes} es una secuencia de instrucciones ordenadas en lenguaje \textit{Bitcoin Script} o simplemente \textit{script}. En la siguiente muestra se pueden ver los diferentes segmentos en los que se divide la cadena hexadecimal de \textit{scriptSig} en el caso concreto de esta transacción de tipo \textit{Coinbase} de ejemplo.
     
     \begin{figure}[H]
         $\begin{array}{lcl}
@@ -192,9 +192,24 @@
     
     \subsubsection{Output (scriptPubKey)}
     Es un dato de longitud variable, en este caso tiene una longitud de 25 \textit{bytes} pero podría contener más o menos información. Se trata de un \textit{script} también llamado \textit{locking script} que implementa un mecanismo de bloqueo para un \textit{output} o salida, de modo que esta no pueda ser gastada hasta que no se desbloquee tras cumplirse una serie de condiciones, la mayoría de la veces ser el poseedor de la clave privada que puede desbloquear el \textit{script} en el que se utiliza una clave pública.
+    
     \begin{figure}[H]
         \texttt{0x76a91480ad90d403581fa3bf46086a91b2d9d4125db6c188ac} \\
         \texttt{76a914}
+    \end{figure}
+    
+    Esta cadena de 25 \textit{bytes}, el igual que \textit{scriptSig} es una secuencia de instrucciones ordenadas en lenguaje \textit{Bitcoin Script} o simplemente \textit{script}. En la siguiente muestra se pueden ver los diferentes segmentos en los que se divide la cadena hexadecimal de \textit{scriptPubKey} en el caso concreto de esta transacción de tipo \textit{Coinbase} de ejemplo.
+    
+    \begin{figure}[H]
+        $\begin{array}{lcl}
+            \texttt{0x76} & \Rightarrow & \textbf{\texttt{OP\_DUP}} \\
+            \texttt{0xa9} & \Rightarrow & \textbf{\texttt{OP\_HASH160}}\\
+            \texttt{0x14} & \Rightarrow & \textbf{\texttt{OP\_PUSHBYTES\_20}} \\
+            \texttt{0x80ad90d403581fa3bf4} & \Rightarrow & \texttt{0x80ad90d403581fa3bf4} \\
+            \texttt{6086a91b2d9d4125db6c1} & & \texttt{6086a91b2d9d4125db6c1} \\
+            \texttt{0x88} & \Rightarrow & \textbf{\texttt{OP\_EQUALVERIFY}} \\
+            \texttt{0xac} & \Rightarrow & \textbf{\texttt{OP\_CHECKSIG}}
+        \end{array}$
     \end{figure}
     
     \subsubsection{Locktime}
