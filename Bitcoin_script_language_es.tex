@@ -21,7 +21,7 @@
 \definecolor{blue}{rgb}{0.16,0,0.98}
 \definecolor{purple}{rgb}{0.65,0.03,0.69}
 
-\title{\textbf{Bitcoin Script language}}
+\title{\textbf{Lenguaje Bitcoin Script}}
 \author{Javier Domínguez Gómez \\
 \small{jdg@member.fsf.org} \\
 \small{Fingerprint: 94AD 19F4 9005 EEB2 3384 C20F 5BDC C668 D664 8E2B}}
@@ -33,8 +33,6 @@
 \tableofcontents{}
 
 \vspace{19mm}
-
-\section{Introducción}
 
 \section{Datos de un bloque}
 \begin{figure}[H]
@@ -165,11 +163,11 @@
     \end{itemize}
     
     \paragraph{Sequence}
-    Se trata de un número de 4 bytes de longitud, se utiliza para permitir que las transacciones no confirmadas que tengan un \textit{Locktime} se actualicen antes de darlas por finalizadas o confirmadas. También se utiliza para desactivar el \textit{Locktime} de la transacción.
+    Se trata de un número de 4 bytes de longitud, se utiliza para permitir que las transacciones no confirmadas que tengan un \textit{Locktime} se actualicen antes de darlas por finalizadas o confirmadas. También se utiliza para desactivar el \textit{Locktime} de la transacción. En el caso de una transacción de tipo \textit{Coinbase} se establece este valor a cero.
     \begin{figure}[H]
         \texttt{0x00000000}
     \end{figure}
-    BIP125\footnote{https://github.com/bitcoin/bips/blob/master/bip-0125.mediawiki}
+    Se implementó en el año 2015 mediante la propuesta BIP125\footnote{https://github.com/bitcoin/bips/blob/master/bip-0125.mediawiki}, hasta entonces no se le daba uso.
     
     \subsubsection{Output count}
     Esta variable es un tiene por valor un número entero positivo de longitud variable, desde 1 hasta 9 \textit{bytes}, y representa el número de salidas u \textit{outputs} que tiene la transacción.
@@ -178,10 +176,13 @@
     \end{figure}
     
     \subsubsection{Output (Value)}
-    Se trata de un número de 8 bytes de longitud que representa la cantidad de satoshis\footnote{1 bitcoin = 100.000.000 satoshis} que podrán ser reclamados en futuras transacciones como \textit{input} para ser gastados de nuevo.
+    Se trata de un número de 8 bytes de longitud en formato \textit{Little-Endian} que representa la cantidad de satoshis\footnote{1 bitcoin = 100.000.000 satoshis} que podrán ser reclamados en futuras transacciones como \textit{input} para ser gastados de nuevo.
     \begin{figure}[H]
-        \texttt{0xcb81319500000000}
+    \centering
+        $\texttt{0x}\overbrace{\texttt{cb81319500000000}}^{Little-Endian} \Rightarrow \texttt{0x}\overbrace{\texttt{00000000953181cb}}^{Big-Endian} = 2503049675_{10}$
     \end{figure}
+    
+    En este caso 2503049675 \textit{satoshis} son 25.03049675 \textit{bitcoins} o BTC, y como es el \textit{output} de la transacción de tipo  es la recompensa que se llevará quien mine este bloque.
     
     \subsubsection{Output (scriptPubKey size)}
     Esta variable es un tiene por valor un número hexadecimal de longitud variable, desde 1 hasta 9 \textit{bytes} que representa el tamaño en \textit{bytes} que tendrán los datos almacenados en \textit{scriptPubKey}.
@@ -211,10 +212,14 @@
             \texttt{0xac} & \Rightarrow & \textbf{\texttt{OP\_CHECKSIG}}
         \end{array}$
     \end{figure}
+    En este escript se introducen 20 \textit{bytes} en la pila mediante el OP\_CODE \textbf{\texttt{OP\_PUSHBYTES\_20}} y representan la dirección a la que se ha de enviar la cantidad de \textit{satoshis} antes de aplicarle el esquema de codificación Base58\footnote{https://en.wikipedia.org/wiki/Base58}.
     
     \subsubsection{Locktime}
+    Se trata de un número de 4 bytes de longitud en formato \textit{Little-Endian} que representa una medida de bloqueo para una transacción, es decir, una condición que mantiene bloqueada la transacción hasta que se cumpla la premisa. El valor  de ese consa premisa se establece mediante edicionalque tenga \textit{Locktime}, y ese valor puede hacer referencia bien a una altura de bloque o bien a una fecha en formato \textit{epoch} o \textit{unixtime}\footnote{https://es.wikipedia.org/wiki/Tiempo\_Unix}. Una vez se cumpla la fecha o la altura del bloque ya se podrá hacer uso de esa transacción. En el caso de una transacción de tipo \textit{Coinbase} no se establece ningún periodo de bloqueo.
     \begin{figure}[H]
         \texttt{0x00000000}
     \end{figure}
+    
+    La mayoría de las transacciones no utilizan el tiempo de bloqueo, por lo que suele establecer su valor a \texttt{0x00000000}. Por el contrario, se puede utilizar para asegurarse de que una transacción rmanecerápe bloqueada por un tiempo específico o hasta que no se llegue a una altura de bloque indicado.
     
 \end{document}
