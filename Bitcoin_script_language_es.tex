@@ -25,7 +25,7 @@
 \author{Javier Domínguez Gómez \\
 \small{jdg@member.fsf.org} \\
 \small{Fingerprint: 94AD 19F4 9005 EEB2 3384 C20F 5BDC C668 D664 8E2B}}
-\date{v0.1.00 - Mayo 2019}
+\date{v0.1.01 - Junio 2019}
 
 \begin{document}
 \maketitle
@@ -33,6 +33,16 @@
 \tableofcontents{}
 
 \vspace{19mm}
+
+\section{Introducción}
+    \subsection{Formatos en el texto}
+    A lo largo de este documento el lector encontrará algunas palabras o bloques de texto con diferentes formatos o tipografía. Se mostrarán en letra \textit{cursiva} las palabras en inglés o que hagan referencia a algún término técnico. Resaltadas o en \textbf{negrita} aquellas palabras que describen una propiedad, una variable o un nombre de fichero, y finalmente con tipografía \texttt{Courier} aquellos datos que representen un valor hexadecimal o base 16, o fragmentos de código fuente en diferentes lenguajes de programación.
+    
+    \subsection{Objetivo}
+    Este documento presenta en detalle el la estructura de datos, composición, funcionamiento y tipos de las transacciones en el protocolo \textit{Bitcoin}\footnote{https://bitcoin.org/bitcoin.pdf}, además el lector podrá encontrar información acerca del lenguaje \textit{Bitcoin Script} que se emplea para el desarrollo e inclusión de programas llamados \textit{scripts} en las transacciones. Puesto que las transacciones son el elemento base donde ubicar los \textit{scripts} es necesario realizar un análisis forense a bajo nivel sobre cada una de las partes de las que se componen dentro del criptosistema definido por el protocolo \textit{Bitcoin}. Todos los datos utilizados en los ejemplos, así como en los cálculos, son datos reales pertenecientes al bloque número \texttt{\#}286819 de la cadena de bloques de \textit{Bitcoin} en la red principal \textit{mainnet}. No existe ninguna razón especial en la elección de este bloque, es uno al azar. El lector puede consultar los datos de este o cualquier otro bloque, bien en la cadena de bloques descargada en su computadora local o bien en un \textit{explorador de bloques online}\footnote{https://www.blockchain.com/en/btc/block-height/286819}, y realizar los mismos cálculos en todos los casos, obviamente obteniendo resultados diferentes.
+    
+    \subsection{A quién va dirigido}
+    El documento va dirigido a principalmente a lectores que quieren desarrollar programas en lenguaje \textit{Bitcoin Script} para posteriormente utilizarlos como \textit{Smart Contracts} en la red del protocolo \textit{Bitcoin}. También va dirigido a lectores familiarizados con la criptología en cualquiera de sus dos ramas: la criptografía y el criptoanálisis, o a estudiantes de ciencias de la computación o matemáticas, en general a lectores que todavía no se han adentrado en el campo de del análisis forense sobre la información que contienelas transacciones de la cadena de bloques de \textit{Bitcoin}, pero que quieren comprender su funcionamiento al más bajo nivel, a nivel de \textit{bits}. El texto trata de facilitar al lector la información sobre los métodos empleados para poder identificar las transacciones dentro de un bloque de datos de \textit{Bitcoin}. Para ello será necesario tener de antemano unos conocimientos mínimos sobre conversión de datos en diferentes bases como decimal y hexadecimal.
 
 \section{Datos de un bloque}
 \begin{figure}[H]
@@ -82,22 +92,22 @@
     \end{figure}
     En los siguientes puntos se explica en detalle uno a uno cada segmento de \textit{bytes} de esta transacción \textit{Coinbase}.
     
-    \subsubsection{Versión}
+    \subsection{Versión}
     Es el número de versión para el registro de las transacciones, se trata de un número entero con una longitud de 4 \textit{bytes} en formato \textit{Little-Endian} que actualmente tiene un valor hexadecimal de \texttt{0x01000000} o 1 en base decimal.
     \begin{figure}[H]
         \texttt{0x01000000}
     \end{figure}
     
-    \subsubsection{Input count}
+    \subsection{Input count}
     Esta variable es un tiene por valor un número entero positivo de longitud variable, desde 1 hasta 9 \textit{bytes}, y representa el número de entradas o \textit{inputs} que tiene la transacción.
     \begin{figure}[H]
         \texttt{0x01}
     \end{figure}
     
-    \subsubsection{Input}
+    \subsection{Input}
     
     \paragraph{TXID}
-    Se trata del un \textit{hash} de 32 bytes que representa la transacción que contiene la salida o el \textit{output} que se va a gastar en esta transacción. Una de las características que diferencia a una transacción de tipo \textit{Coinbase} del resto es que el valor de TXID es un numero hexadecimal con valor cero.
+    Se trata del un \textit{hash} de 32 \textit{bytes} que representa la transacción que contiene la salida o el \textit{output} que se va a gastar en esta transacción. Una de las características que diferencia a una transacción de tipo \textit{Coinbase} del resto es que el valor de TXID es un numero hexadecimal con valor cero.
     \begin{figure}[H]
         \texttt{0x0000000000000000000000000000000} \\
         \texttt{000000000000000000000000000000000}
@@ -105,7 +115,7 @@
     En una transacción corriente este dato se obtiene aplicando la función hash SHA-256 dos veces a los datos de la transacción en formato \textit{Little-Endian}.
     
     \paragraph{VOUT}
-    En Bitcoin todas las salidas u \textit{outputs} de una transacción se almacenan en un dato de tipo vector. VOUT es un número hexadecimal con una longitud de 4 bytes que representa el índice de las salidas u \textit{outputs} de una transacción en dicho vector. Otra de las características de una transacción de tipo \textit{Coinbase} es que el valor para VOUT es siempre \texttt{0xffffffff}, el número de 4 bytes de más alto valor.
+    En Bitcoin todas las salidas u \textit{outputs} de una transacción se almacenan en un dato de tipo vector. VOUT es un número hexadecimal con una longitud de 4 \textit{bytes} que representa el índice de las salidas u \textit{outputs} de una transacción en dicho vector. Otra de las características de una transacción de tipo \textit{Coinbase} es que el valor para VOUT es siempre \texttt{0xffffffff}, el número de 4 \textit{bytes} de más alto valor.
     \begin{figure}[H]
         \texttt{0xffffffff}
     \end{figure}
@@ -115,10 +125,10 @@
     \begin{figure}[H]
         \texttt{0x60}
     \end{figure}
-    En este caso el tamaño es de \texttt{0x60}, que tras convertirlo a base decimal son 96 bytes. Para este dato existe límite de tamaño que actualmente es de 1650 \textit{bytes}.
+    En este caso el tamaño es de \texttt{0x60}, que tras convertirlo a base decimal son 96 \textit{bytes}. Para este dato existe límite de tamaño que actualmente es de 1650 \textit{bytes}.
     
     \paragraph{scriptSig}
-    Cuando en una transacción se generan salidas u \textit{outputs}, estas salidas se establecen con un \textit{script} de bloqueo, por lo tanto para poder utilizarlas como entradas o \textit{inputs} en las nuevas transacciones antes se debe debe utilizar un \textit{script} de desbloqueo llamado \textit{scriptSig}. Se trata de un dato de de longitud variable, en este caso tiene una longitud de 96 bytes pero podría contener más o menos información, dependiendo de las operaciones que se quieran realizar en el \textit{script} o el mensaje que se quiera incluir. Adicionalmente lo utilizan los mineros para incluir mensajes de texto personalizados empleando caracteres ASCII, normalmente el nombre del minero o del pool de minería que ha resuelto el hash válido para poder minar el bloque. En este caso la transacción \textit{Coinbase} contiene el siguiente valor para el segmento de datos \textit{scriptSig}.
+    Cuando en una transacción se generan salidas u \textit{outputs}, estas salidas se establecen con un \textit{script} de bloqueo, por lo tanto para poder utilizarlas como entradas o \textit{inputs} en las nuevas transacciones antes se debe debe utilizar un \textit{script} de desbloqueo llamado \textit{scriptSig}. Se trata de un dato de de longitud variable, en este caso tiene una longitud de 96 \textit{bytes} pero podría contener más o menos información, dependiendo de las operaciones que se quieran realizar en el \textit{script} o el mensaje que se quiera incluir. Adicionalmente lo utilizan los mineros para incluir mensajes de texto personalizados empleando caracteres ASCII, normalmente el nombre del minero o del pool de minería que ha resuelto el hash válido para poder minar el bloque. En este caso la transacción \textit{Coinbase} contiene el siguiente valor para el segmento de datos \textit{scriptSig}.
     \begin{figure}[H]
         \texttt{0x03636004062f503253482f04358b0553084404f253000017e446522c} \\
         \texttt{fabe6d6d690688fb886c0df0c87cbc7ea4f7f1b5c0050bd0ac3751cfc9}
@@ -155,28 +165,28 @@
         \end{array}$
     \end{figure}
     
-    Para evitar que varias transacciones de tipo \textit{Coinbase} pertenecientes a diferentes bloques tengan el mismo valor en TXID se decidió implementar mediante la propuesta BIP34\footnote{https://github.com/bitcoin/bips/blob/master/bip-0034.mediawiki} un sistema que añade al inicio del valor de \textit{scriptSig} un bloque de 4 bytes, dividido en dos secciones:
+    Para evitar que varias transacciones de tipo \textit{Coinbase} pertenecientes a diferentes bloques tengan el mismo valor en TXID se decidió implementar mediante la propuesta BIP34\footnote{https://github.com/bitcoin/bips/blob/master/bip-0034.mediawiki} un sistema que añade al inicio del valor de \textit{scriptSig} un bloque de 4 \textit{bytes}, dividido en dos secciones:
     
     \begin{itemize}
-    \item La primera es una constante\footnote{https://en.bitcoin.it/wiki/Script\#Constants} de 1 \textit{byte} de longitud que representa un OP\_CODE, en este caso con valor \texttt{0x03}, e indica que el siguiente dato que se va a colocar en la pila tiene una longitud de 3 bytes. Para ello se utiliza el OP\_CODE \textbf{\texttt{OP\_PUSHBYTES\_3}}.
-    \item La segunda sección es un dato de 3 bytes en formato \textit{Little-Endian} que representan la altura o el número del bloque al que pertenece la transacción \textit{Coinbase}, en este caso \texttt{0x636004}. La transacción \textit{Coinbase} que se ha utilizado en este ejemplo pertenece al bloque número \texttt{\#}286819 de la cadena de bloques de \textit{Bitcoin} en la red principal \textit{mainnet}. Si se convierten los 3 bytes \texttt{0x636004} a formato \textit{Big-Endian} se obtiene el valor hexadecimal \texttt{0x046063}, que en base 10 o decimal es el número 286819 y se corresponde con el número de bloque al que pertenece esta transacción.
+    \item La primera es una constante\footnote{https://en.bitcoin.it/wiki/Script\#Constants} de 1 \textit{byte} de longitud que representa un OP\_CODE, en este caso con valor \texttt{0x03}, e indica que el siguiente dato que se va a colocar en la pila tiene una longitud de 3 \textit{bytes}. Para ello se utiliza el OP\_CODE \textbf{\texttt{OP\_PUSHBYTES\_3}}.
+    \item La segunda sección es un dato de 3 \textit{bytes} en formato \textit{Little-Endian} que representan la altura o el número del bloque al que pertenece la transacción \textit{Coinbase}, en este caso \texttt{0x636004}. La transacción \textit{Coinbase} que se ha utilizado en este ejemplo pertenece al bloque número \texttt{\#}286819 de la cadena de bloques de \textit{Bitcoin} en la red principal \textit{mainnet}. Si se convierten los 3 \textit{bytes} \texttt{0x636004} a formato \textit{Big-Endian} se obtiene el valor hexadecimal \texttt{0x046063}, que en base 10 o decimal es el número 286819 y se corresponde con el número de bloque al que pertenece esta transacción.
     \end{itemize}
     
     \paragraph{Sequence}
-    Se trata de un número de 4 bytes de longitud, se utiliza para permitir que las transacciones no confirmadas que tengan un \textit{Locktime} se actualicen antes de darlas por finalizadas o confirmadas. También se utiliza para desactivar el \textit{Locktime} de la transacción. En el caso de una transacción de tipo \textit{Coinbase} se establece este valor a cero.
+    Se trata de un número de 4 \textit{bytes} de longitud, se utiliza para permitir que las transacciones no confirmadas que tengan un \textit{Locktime} se actualicen antes de darlas por finalizadas o confirmadas. También se utiliza para desactivar el \textit{Locktime} de la transacción. En el caso de una transacción de tipo \textit{Coinbase} se establece este valor a cero.
     \begin{figure}[H]
         \texttt{0x00000000}
     \end{figure}
     Se implementó en el año 2015 mediante la propuesta BIP125\footnote{https://github.com/bitcoin/bips/blob/master/bip-0125.mediawiki}, hasta entonces no se le daba uso.
     
-    \subsubsection{Output count}
+    \subsection{Output count}
     Esta variable es un tiene por valor un número entero positivo de longitud variable, desde 1 hasta 9 \textit{bytes}, y representa el número de salidas u \textit{outputs} que tiene la transacción.
     \begin{figure}[H]
         \texttt{0x01}
     \end{figure}
     
-    \subsubsection{Output (Value)}
-    Se trata de un número de 8 bytes de longitud en formato \textit{Little-Endian} que representa la cantidad de satoshis\footnote{1 bitcoin = 100.000.000 satoshis} que podrán ser reclamados en futuras transacciones como \textit{input} para ser gastados de nuevo.
+    \subsection{Output (Value)}
+    Se trata de un número de 8 \textit{bytes} de longitud en formato \textit{Little-Endian} que representa la cantidad de satoshis\footnote{1 bitcoin = 100.000.000 satoshis} que podrán ser reclamados en futuras transacciones como \textit{input} para ser gastados de nuevo.
     \begin{figure}[H]
     \centering
         $\texttt{0x}\overbrace{\texttt{cb81319500000000}}^{Little-Endian} \Rightarrow \texttt{0x}\overbrace{\texttt{00000000953181cb}}^{Big-Endian} = 2503049675_{10}$
@@ -184,19 +194,18 @@
     
     En este caso 2503049675 \textit{satoshis} son 25.03049675 \textit{bitcoins} o BTC, y como es el \textit{output} de la transacción de tipo  es la recompensa que se llevará quien mine este bloque.
     
-    \subsubsection{Output (scriptPubKey size)}
+    \subsection{Output (scriptPubKey size)}
     Esta variable es un tiene por valor un número hexadecimal de longitud variable, desde 1 hasta 9 \textit{bytes} que representa el tamaño en \textit{bytes} que tendrán los datos almacenados en \textit{scriptPubKey}.
     \begin{figure}[H]
         \texttt{0x19}
     \end{figure}
     En este caso el tamaño es de \texttt{0x19}, que tras convertirlo a base decimal son 25 \textit{bytes}.
     
-    \subsubsection{Output (scriptPubKey)}
+    \subsection{Output (scriptPubKey)}
     Es un dato de longitud variable, en este caso tiene una longitud de 25 \textit{bytes} pero podría contener más o menos información. Se trata de un \textit{script} también llamado \textit{locking script} que implementa un mecanismo de bloqueo para un \textit{output} o salida, de modo que esta no pueda ser gastada hasta que no se desbloquee tras cumplirse una serie de condiciones, la mayoría de la veces ser el poseedor de la clave privada que puede desbloquear el \textit{script} en el que se utiliza una clave pública.
     
     \begin{figure}[H]
-        \texttt{0x76a91480ad90d403581fa3bf46086a91b2d9d4125db6c188ac} \\
-        \texttt{76a914}
+        \texttt{0x76a91480ad90d403581fa3bf46086a91b2d9d4125db6c188ac}
     \end{figure}
     
     Esta cadena de 25 \textit{bytes}, el igual que \textit{scriptSig} es una secuencia de instrucciones ordenadas en lenguaje \textit{Bitcoin Script} o simplemente \textit{script}. En la siguiente muestra se pueden ver los diferentes segmentos en los que se divide la cadena hexadecimal de \textit{scriptPubKey} en el caso concreto de esta transacción de tipo \textit{Coinbase} de ejemplo.
@@ -214,8 +223,8 @@
     \end{figure}
     En este escript se introducen 20 \textit{bytes} en la pila mediante el OP\_CODE \textbf{\texttt{OP\_PUSHBYTES\_20}} y representan la dirección a la que se ha de enviar la cantidad de \textit{satoshis} antes de aplicarle el esquema de codificación Base58\footnote{https://en.wikipedia.org/wiki/Base58}.
     
-    \subsubsection{Locktime}
-    Se trata de un número de 4 bytes de longitud en formato \textit{Little-Endian} que representa una medida de bloqueo para una transacción, es decir, una condición que mantiene bloqueada la transacción hasta que se cumpla la premisa. El valor  de ese consa premisa se establece mediante edicionalque tenga \textit{Locktime}, y ese valor puede hacer referencia bien a una altura de bloque o bien a una fecha en formato \textit{epoch} o \textit{unixtime}\footnote{https://es.wikipedia.org/wiki/Tiempo\_Unix}. Una vez se cumpla la fecha o la altura del bloque ya se podrá hacer uso de esa transacción. En el caso de una transacción de tipo \textit{Coinbase} no se establece ningún periodo de bloqueo.
+    \subsection{Locktime}
+    Se trata de un número de 4 \textit{bytes} de longitud en formato \textit{Little-Endian} que representa una medida de bloqueo para una transacción, es decir, una condición que mantiene bloqueada la transacción hasta que se cumpla la premisa. El valor  de ese consa premisa se establece mediante edicionalque tenga \textit{Locktime}, y ese valor puede hacer referencia bien a una altura de bloque o bien a una fecha en formato \textit{epoch} o \textit{unixtime}\footnote{https://es.wikipedia.org/wiki/Tiempo\_Unix}. Una vez se cumpla la fecha o la altura del bloque ya se podrá hacer uso de esa transacción. En el caso de una transacción de tipo \textit{Coinbase} no se establece ningún periodo de bloqueo.
     \begin{figure}[H]
         \texttt{0x00000000}
     \end{figure}
