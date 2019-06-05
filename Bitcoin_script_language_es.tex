@@ -105,7 +105,7 @@
     \end{figure}
     
     \subsection{Input}
-    El segmento de datos de las entradas o \textit{inputs} en una transacción se dividen a su vez en los siguientes cinco segmentos:
+    En una transacción hay un segmentos de datos para las entradas o \textit{inputs} y este a su vez se divide en los siguientes cinco segmentos:
     
     \begin{itemize}
     \item TXID
@@ -114,6 +114,12 @@
     \item scriptSig
     \item Sequence
     \end{itemize}
+    
+    \begin{figure}[H]
+    \centering
+        \includegraphics[scale=0.57]{img/Bitcoin_tansactions_data_input.png}
+        \caption{Los 5 segmentos de datos en una entrada o \textit{input}.}
+    \end{figure}
     
     \paragraph{TXID}
     Se trata del un \textit{hash} de 32 \textit{bytes} que representa la transacción que contiene la salida o el \textit{output} que se va a gastar en esta transacción. Una de las características que diferencia a una transacción de tipo \textit{Coinbase} del resto es que el valor de TXID es un numero hexadecimal con valor cero.
