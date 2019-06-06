@@ -90,6 +90,19 @@
         \texttt{059622bf \textbf{\textcolor{purple}{58 1f a3 bf 46 08 6a 91  b2 d9 d4 12 5d b6 c1 88}} |X...F.j.....]...|} \\
         \texttt{059622cf \textbf{\textcolor{purple}{ac 00 00 00 00 \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }} |.....|}}
     \end{figure}
+    
+    Otra manera de visualizar los datos de una transacción es mostrar todos los \textit{bytes} concatenados, sin espacios:
+    
+    \begin{figure}[H]
+        \texttt{0x01000000010000000000000000000000000000000000000000000000} \\
+        \texttt{000000000000000000ffffffff6003636004062f503253482f04358b05} \\
+        \texttt{53084404f253000017e446522cfabe6d6d690688fb886c0df0c87cbc7e} \\
+        \texttt{a4f7f1b5c0050bd0ac3751cfc997d9d6971328de040000000000000048} \\
+        \texttt{61707079204e592120596f7572732047486173682e494f0000000001cb} \\
+        \texttt{813195000000001976a91480ad90d403581fa3bf46086a91b2d9d4125d} \\
+        \texttt{b6c188ac00000000}
+    \end{figure}
+    
     En los siguientes puntos se explica en detalle uno a uno cada segmento de \textit{bytes} de esta transacción \textit{Coinbase}.
     
     \subsection{Versión}
@@ -149,6 +162,7 @@
         \texttt{fabe6d6d690688fb886c0df0c87cbc7ea4f7f1b5c0050bd0ac3751cfc9}
         \texttt{97d9d6971328de04000000000000004861707079204e592120596f7572}
         \texttt{732047486173682e494f}
+        
     \end{figure}
     
     En una representación de carácteres ASCII se vería de la siguiente forma:
