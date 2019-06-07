@@ -94,30 +94,63 @@
     Otra manera de visualizar los datos de una transacción es mostrar todos los \textit{bytes} concatenados, sin espacios:
     
     \begin{figure}[H]
-        \texttt{0x01000000010000000000000000000000000000000000000000000000} \\
-        \texttt{000000000000000000ffffffff6003636004062f503253482f04358b05} \\
-        \texttt{53084404f253000017e446522cfabe6d6d690688fb886c0df0c87cbc7e} \\
-        \texttt{a4f7f1b5c0050bd0ac3751cfc997d9d6971328de040000000000000048} \\
-        \texttt{61707079204e592120596f7572732047486173682e494f0000000001cb} \\
-        \texttt{813195000000001976a91480ad90d403581fa3bf46086a91b2d9d4125d} \\
-        \texttt{b6c188ac00000000}
+        \texttt{0x0100000001000000000000000000000000000000000000000000000} \\
+        \texttt{0000000000000000000ffffffff6003636004062f503253482f04358b} \\
+        \texttt{0553084404f253000017e446522cfabe6d6d690688fb886c0df0c87cb} \\
+        \texttt{c7ea4f7f1b5c0050bd0ac3751cfc997d9d6971328de04000000000000} \\
+        \texttt{004861707079204e592120596f7572732047486173682e494f0000000} \\
+        \texttt{001cb813195000000001976a91480ad90d403581fa3bf46086a91b2d9} \\
+        \texttt{d4125db6c188ac00000000}
     \end{figure}
     
     En los siguientes puntos se explica en detalle uno a uno cada segmento de \textit{bytes} de esta transacción \textit{Coinbase}.
     
     \subsection{Versión}
-    Es el número de versión para el registro de las transacciones, se trata de un número entero con una longitud de 4 \textit{bytes} en formato \textit{Little-Endian} que actualmente tiene un valor hexadecimal de \texttt{0x01000000} o 1 en base decimal.
+    
+    \begin{figure}[H]
+        \texttt{0x\colorbox{Yellow}{01000000}01000000000000000000000000000000000000000000000} \\
+        \texttt{0000000000000000000ffffffff6003636004062f503253482f04358b} \\
+        \texttt{0553084404f253000017e446522cfabe6d6d690688fb886c0df0c87cb} \\
+        \texttt{c7ea4f7f1b5c0050bd0ac3751cfc997d9d6971328de04000000000000} \\
+        \texttt{004861707079204e592120596f7572732047486173682e494f0000000} \\
+        \texttt{001cb813195000000001976a91480ad90d403581fa3bf46086a91b2d9} \\
+        \texttt{d4125db6c188ac00000000}
+    \end{figure}
+    
+    Es el primer dato que se encuentra en una transacción y representa el número de versión para el registro de las transacciones, se trata de un número entero con una longitud de 4 \textit{bytes} en formato \textit{Little-Endian} que actualmente tiene un valor hexadecimal de \texttt{0x01000000} o 1 en base decimal.
     \begin{figure}[H]
         \texttt{0x01000000}
     \end{figure}
     
     \subsection{Input count}
+    
+    \begin{figure}[H]
+        \texttt{0x01000000\colorbox{Yellow}{01}000000000000000000000000000000000000000000000} \\
+        \texttt{0000000000000000000ffffffff6003636004062f503253482f04358b} \\
+        \texttt{0553084404f253000017e446522cfabe6d6d690688fb886c0df0c87cb} \\
+        \texttt{c7ea4f7f1b5c0050bd0ac3751cfc997d9d6971328de04000000000000} \\
+        \texttt{004861707079204e592120596f7572732047486173682e494f0000000} \\
+        \texttt{001cb813195000000001976a91480ad90d403581fa3bf46086a91b2d9} \\
+        \texttt{d4125db6c188ac00000000}
+    \end{figure}
+    
     Esta variable es un tiene por valor un número entero positivo de longitud variable, desde 1 hasta 9 \textit{bytes}, y representa el número de entradas o \textit{inputs} que tiene la transacción.
     \begin{figure}[H]
         \texttt{0x01}
     \end{figure}
     
     \subsection{Input}
+    
+    \begin{figure}[H]
+        \texttt{0x0100000001\colorbox{Yellow}{000000000000000000000000000000000000000000000}} \\
+        \texttt{\colorbox{Yellow}{0000000000000000000ffffffff6003636004062f503253482f04358b}} \\
+        \texttt{\colorbox{Yellow}{0553084404f253000017e446522cfabe6d6d690688fb886c0df0c87cb}} \\
+        \texttt{\colorbox{Yellow}{c7ea4f7f1b5c0050bd0ac3751cfc997d9d6971328de04000000000000}} \\
+        \texttt{\colorbox{Yellow}{004861707079204e592120596f7572732047486173682e494f0000000}} \\
+        \texttt{\colorbox{Yellow}{0}01cb813195000000001976a91480ad90d403581fa3bf46086a91b2d9} \\
+        \texttt{d4125db6c188ac00000000}
+    \end{figure}
+    
     En una transacción hay un segmentos de datos para las entradas o \textit{inputs} y este a su vez se divide en los siguientes cinco segmentos:
     
     \begin{itemize}
@@ -135,6 +168,17 @@
     \end{figure}
     
     \paragraph{TXID}
+    
+    \begin{figure}[H]
+        \texttt{0x0100000001\colorbox{Yellow}{000000000000000000000000000000000000000000000}} \\
+        \texttt{\colorbox{Yellow}{0000000000000000000}ffffffff6003636004062f503253482f04358b} \\
+        \texttt{0553084404f253000017e446522cfabe6d6d690688fb886c0df0c87cb} \\
+        \texttt{c7ea4f7f1b5c0050bd0ac3751cfc997d9d6971328de04000000000000} \\
+        \texttt{004861707079204e592120596f7572732047486173682e494f0000000} \\
+        \texttt{001cb813195000000001976a91480ad90d403581fa3bf46086a91b2d9} \\
+        \texttt{d4125db6c188ac00000000}
+    \end{figure}
+    
     Se trata del un \textit{hash} de 32 \textit{bytes} que representa la transacción que contiene la salida o el \textit{output} que se va a gastar en esta transacción. Una de las características que diferencia a una transacción de tipo \textit{Coinbase} del resto es que el valor de TXID es un numero hexadecimal con valor cero.
     \begin{figure}[H]
         \texttt{0x0000000000000000000000000000000} \\
@@ -143,12 +187,34 @@
     En una transacción corriente este dato se obtiene aplicando la función hash SHA-256 dos veces a los datos de la transacción en formato \textit{Little-Endian}.
     
     \paragraph{VOUT}
+    
+    \begin{figure}[H]
+        \texttt{0x0100000001000000000000000000000000000000000000000000000} \\
+        \texttt{0000000000000000000\colorbox{Yellow}{ffffffff}6003636004062f503253482f04358b} \\
+        \texttt{0553084404f253000017e446522cfabe6d6d690688fb886c0df0c87cb} \\
+        \texttt{c7ea4f7f1b5c0050bd0ac3751cfc997d9d6971328de04000000000000} \\
+        \texttt{004861707079204e592120596f7572732047486173682e494f0000000} \\
+        \texttt{001cb813195000000001976a91480ad90d403581fa3bf46086a91b2d9} \\
+        \texttt{d4125db6c188ac00000000}
+    \end{figure}
+    
     En Bitcoin todas las salidas u \textit{outputs} de una transacción se almacenan en un dato de tipo vector. VOUT es un número hexadecimal con una longitud de 4 \textit{bytes} que representa el índice de las salidas u \textit{outputs} de una transacción en dicho vector. Otra de las características de una transacción de tipo \textit{Coinbase} es que el valor para VOUT es siempre \texttt{0xffffffff}, el número de 4 \textit{bytes} de más alto valor.
     \begin{figure}[H]
         \texttt{0xffffffff}
     \end{figure}
     
     \paragraph{scriptSig size}
+    
+    \begin{figure}[H]
+        \texttt{0x0100000001000000000000000000000000000000000000000000000} \\
+        \texttt{0000000000000000000ffffffff\colorbox{Yellow}{60}03636004062f503253482f04358b} \\
+        \texttt{0553084404f253000017e446522cfabe6d6d690688fb886c0df0c87cb} \\
+        \texttt{c7ea4f7f1b5c0050bd0ac3751cfc997d9d6971328de04000000000000} \\
+        \texttt{004861707079204e592120596f7572732047486173682e494f0000000} \\
+        \texttt{001cb813195000000001976a91480ad90d403581fa3bf46086a91b2d9} \\
+        \texttt{d4125db6c188ac00000000}
+    \end{figure}
+    
     Esta variable es un tiene por valor un número hexadecimal de longitud variable, desde 1 hasta 9 \textit{bytes} que representa el tamaño en \textit{bytes} que tendrán los datos almacenados en \textit{scriptSig}.
     \begin{figure}[H]
         \texttt{0x60}
@@ -156,6 +222,17 @@
     En este caso el tamaño es de \texttt{0x60}, que tras convertirlo a base decimal son 96 \textit{bytes}. Para este dato existe límite de tamaño que actualmente es de 1650 \textit{bytes}.
     
     \paragraph{scriptSig}
+    
+    \begin{figure}[H]
+        \texttt{0x0100000001000000000000000000000000000000000000000000000} \\
+        \texttt{0000000000000000000ffffffff60\colorbox{Yellow}{03636004062f503253482f04358b}} \\
+        \texttt{\colorbox{Yellow}{0553084404f253000017e446522cfabe6d6d690688fb886c0df0c87cb}} \\
+        \texttt{\colorbox{Yellow}{c7ea4f7f1b5c0050bd0ac3751cfc997d9d6971328de04000000000000}} \\
+        \texttt{\colorbox{Yellow}{004861707079204e592120596f7572732047486173682e494f}0000000} \\
+        \texttt{001cb813195000000001976a91480ad90d403581fa3bf46086a91b2d9} \\
+        \texttt{d4125db6c188ac00000000}
+    \end{figure}
+    
     Cuando en una transacción se generan salidas u \textit{outputs}, estas salidas se establecen con un \textit{script} de bloqueo, por lo tanto para poder utilizarlas como entradas o \textit{inputs} en las nuevas transacciones antes se debe debe utilizar un \textit{script} de desbloqueo llamado \textit{scriptSig}. Se trata de un dato de de longitud variable, en este caso tiene una longitud de 96 \textit{bytes} pero podría contener más o menos información, dependiendo de las operaciones que se quieran realizar en el \textit{script} o el mensaje que se quiera incluir. Adicionalmente lo utilizan los mineros para incluir mensajes de texto personalizados empleando caracteres ASCII, normalmente el nombre del minero o del pool de minería que ha resuelto el hash válido para poder minar el bloque. En este caso la transacción \textit{Coinbase} contiene el siguiente valor para el segmento de datos \textit{scriptSig}.
     \begin{figure}[H]
         \texttt{0x03636004062f503253482f04358b0553084404f253000017e446522c} \\
@@ -202,6 +279,17 @@
     \end{itemize}
     
     \paragraph{Sequence}
+    
+    \begin{figure}[H]
+        \texttt{0x0100000001000000000000000000000000000000000000000000000} \\
+        \texttt{0000000000000000000ffffffff6003636004062f503253482f04358b} \\
+        \texttt{0553084404f253000017e446522cfabe6d6d690688fb886c0df0c87cb} \\
+        \texttt{c7ea4f7f1b5c0050bd0ac3751cfc997d9d6971328de04000000000000} \\
+        \texttt{004861707079204e592120596f7572732047486173682e494f\colorbox{Yellow}{0000000}} \\
+        \texttt{\colorbox{Yellow}{0}01cb813195000000001976a91480ad90d403581fa3bf46086a91b2d9} \\
+        \texttt{d4125db6c188ac00000000}
+    \end{figure}
+    
     Se trata de un número de 4 \textit{bytes} de longitud, se utiliza para permitir que las transacciones no confirmadas que tengan un \textit{Locktime} se actualicen antes de darlas por finalizadas o confirmadas. También se utiliza para desactivar el \textit{Locktime} de la transacción. En el caso de una transacción de tipo \textit{Coinbase} se establece este valor a cero.
     \begin{figure}[H]
         \texttt{0x00000000}
@@ -209,12 +297,34 @@
     Se implementó en el año 2015 mediante la propuesta BIP125\footnote{https://github.com/bitcoin/bips/blob/master/bip-0125.mediawiki}, hasta entonces no se le daba uso.
     
     \subsection{Output count}
+    
+    \begin{figure}[H]
+        \texttt{0x0100000001000000000000000000000000000000000000000000000} \\
+        \texttt{0000000000000000000ffffffff6003636004062f503253482f04358b} \\
+        \texttt{0553084404f253000017e446522cfabe6d6d690688fb886c0df0c87cb} \\
+        \texttt{c7ea4f7f1b5c0050bd0ac3751cfc997d9d6971328de04000000000000} \\
+        \texttt{004861707079204e592120596f7572732047486173682e494f0000000} \\
+        \texttt{0\colorbox{Yellow}{01}cb813195000000001976a91480ad90d403581fa3bf46086a91b2d9} \\
+        \texttt{d4125db6c188ac00000000}
+    \end{figure}
+    
     Esta variable es un tiene por valor un número entero positivo de longitud variable, desde 1 hasta 9 \textit{bytes}, y representa el número de salidas u \textit{outputs} que tiene la transacción.
     \begin{figure}[H]
         \texttt{0x01}
     \end{figure}
     
     \subsection{Output (Value)}
+    
+    \begin{figure}[H]
+        \texttt{0x0100000001000000000000000000000000000000000000000000000} \\
+        \texttt{0000000000000000000ffffffff6003636004062f503253482f04358b} \\
+        \texttt{0553084404f253000017e446522cfabe6d6d690688fb886c0df0c87cb} \\
+        \texttt{c7ea4f7f1b5c0050bd0ac3751cfc997d9d6971328de04000000000000} \\
+        \texttt{004861707079204e592120596f7572732047486173682e494f0000000} \\
+        \texttt{001\colorbox{Yellow}{cb81319500000000}1976a91480ad90d403581fa3bf46086a91b2d9} \\
+        \texttt{d4125db6c188ac00000000}
+    \end{figure}
+    
     Se trata de un número de 8 \textit{bytes} de longitud en formato \textit{Little-Endian} que representa la cantidad de satoshis\footnote{1 bitcoin = 100.000.000 satoshis} que podrán ser reclamados en futuras transacciones como \textit{input} para ser gastados de nuevo.
     \begin{figure}[H]
     \centering
@@ -224,6 +334,17 @@
     En este caso 2503049675 \textit{satoshis} son 25.03049675 \textit{bitcoins} o BTC, y como es el \textit{output} de la transacción de tipo  es la recompensa que se llevará quien mine este bloque.
     
     \subsection{Output (scriptPubKey size)}
+    
+    \begin{figure}[H]
+        \texttt{0x0100000001000000000000000000000000000000000000000000000} \\
+        \texttt{0000000000000000000ffffffff6003636004062f503253482f04358b} \\
+        \texttt{0553084404f253000017e446522cfabe6d6d690688fb886c0df0c87cb} \\
+        \texttt{c7ea4f7f1b5c0050bd0ac3751cfc997d9d6971328de04000000000000} \\
+        \texttt{004861707079204e592120596f7572732047486173682e494f0000000} \\
+        \texttt{001cb81319500000000\colorbox{Yellow}{19}76a91480ad90d403581fa3bf46086a91b2d9} \\
+        \texttt{d4125db6c188ac00000000}
+    \end{figure}
+    
     Esta variable es un tiene por valor un número hexadecimal de longitud variable, desde 1 hasta 9 \textit{bytes} que representa el tamaño en \textit{bytes} que tendrán los datos almacenados en \textit{scriptPubKey}.
     \begin{figure}[H]
         \texttt{0x19}
@@ -231,6 +352,17 @@
     En este caso el tamaño es de \texttt{0x19}, que tras convertirlo a base decimal son 25 \textit{bytes}.
     
     \subsection{Output (scriptPubKey)}
+    
+    \begin{figure}[H]
+        \texttt{0x0100000001000000000000000000000000000000000000000000000} \\
+        \texttt{0000000000000000000ffffffff6003636004062f503253482f04358b} \\
+        \texttt{0553084404f253000017e446522cfabe6d6d690688fb886c0df0c87cb} \\
+        \texttt{c7ea4f7f1b5c0050bd0ac3751cfc997d9d6971328de04000000000000} \\
+        \texttt{004861707079204e592120596f7572732047486173682e494f0000000} \\
+        \texttt{001cb8131950000000019\colorbox{Yellow}{76a91480ad90d403581fa3bf46086a91b2d9}} \\
+        \texttt{\colorbox{Yellow}{d4125db6c188ac}00000000}
+    \end{figure}
+    
     Es un dato de longitud variable, en este caso tiene una longitud de 25 \textit{bytes} pero podría contener más o menos información. Se trata de un \textit{script} también llamado \textit{locking script} que implementa un mecanismo de bloqueo para un \textit{output} o salida, de modo que esta no pueda ser gastada hasta que no se desbloquee tras cumplirse una serie de condiciones, la mayoría de la veces ser el poseedor de la clave privada que puede desbloquear el \textit{script} en el que se utiliza una clave pública.
     
     \begin{figure}[H]
@@ -253,6 +385,17 @@
     En este escript se introducen 20 \textit{bytes} en la pila mediante el OP\_CODE \textbf{\texttt{OP\_PUSHBYTES\_20}} y representan la dirección a la que se ha de enviar la cantidad de \textit{satoshis} antes de aplicarle el esquema de codificación Base58\footnote{https://en.wikipedia.org/wiki/Base58}.
     
     \subsection{Locktime}
+    
+    \begin{figure}[H]
+        \texttt{0x0100000001000000000000000000000000000000000000000000000} \\
+        \texttt{0000000000000000000ffffffff6003636004062f503253482f04358b} \\
+        \texttt{0553084404f253000017e446522cfabe6d6d690688fb886c0df0c87cb} \\
+        \texttt{c7ea4f7f1b5c0050bd0ac3751cfc997d9d6971328de04000000000000} \\
+        \texttt{004861707079204e592120596f7572732047486173682e494f0000000} \\
+        \texttt{001cb813195000000001976a91480ad90d403581fa3bf46086a91b2d9} \\
+        \texttt{d4125db6c188ac\colorbox{Yellow}{00000000}}
+    \end{figure}
+    
     Se trata de un número de 4 \textit{bytes} de longitud en formato \textit{Little-Endian} que representa una medida de bloqueo para una transacción, es decir, una condición que mantiene bloqueada la transacción hasta que se cumpla la premisa. El valor  de ese consa premisa se establece mediante edicionalque tenga \textit{Locktime}, y ese valor puede hacer referencia bien a una altura de bloque o bien a una fecha en formato \textit{epoch} o \textit{unixtime}\footnote{https://es.wikipedia.org/wiki/Tiempo\_Unix}. Una vez se cumpla la fecha o la altura del bloque ya se podrá hacer uso de esa transacción. En el caso de una transacción de tipo \textit{Coinbase} no se establece ningún periodo de bloqueo.
     \begin{figure}[H]
         \texttt{0x00000000}
