@@ -20,6 +20,14 @@
 \definecolor{darkTurquoise}{rgb}{0.18,0.65,0.74}
 \definecolor{blue}{rgb}{0.16,0,0.98}
 \definecolor{purple}{rgb}{0.65,0.03,0.69}
+\setlength\fboxsep{0pt}
+
+\newsavebox\mybox%
+\newcommand\boxedB[2][1mm]{%
+  \savebox\mybox{\ensuremath{\displaystyle\texttt{#2}}}%
+  \colorbox{Yellow}{\raisebox{-\dp\mybox-#1}{\rule{0pt}{\ht\mybox+\dp\mybox+#1+#1}}%
+    \usebox\mybox}
+}
 
 \title{\textbf{Lenguaje Bitcoin Script}}
 \author{Javier Domínguez Gómez \\
@@ -108,7 +116,7 @@
     \subsection{Versión}
     
     \begin{figure}[H]
-        \texttt{0x\colorbox{Yellow}{01000000}01000000000000000000000000000000000000000000000} \\
+        \texttt{0x\boxedB{01000000}01000000000000000000000000000000000000000000000} \\
         \texttt{0000000000000000000ffffffff6003636004062f503253482f04358b} \\
         \texttt{0553084404f253000017e446522cfabe6d6d690688fb886c0df0c87cb} \\
         \texttt{c7ea4f7f1b5c0050bd0ac3751cfc997d9d6971328de04000000000000} \\
