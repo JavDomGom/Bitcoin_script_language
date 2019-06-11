@@ -9,12 +9,6 @@
 \usepackage{amsmath}
 \usepackage{titlesec}
 
-\setcounter{secnumdepth}{4}
-\titleformat{\paragraph}
-{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
-\titlespacing*{\paragraph}
-{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
-
 \definecolor{red}{rgb}{0.95,0.12,0.14}
 \definecolor{green}{rgb}{0.47,0.58,0.17}
 \definecolor{darkTurquoise}{rgb}{0.18,0.65,0.74}
@@ -152,7 +146,7 @@
         \texttt{d4125db6c188ac00000000}
     \end{figure}
     
-    En una transacción hay un segmentos de datos para las entradas o \textit{inputs} y este a su vez se divide en los siguientes cinco segmentos:
+    En una transacción hay un segmento de datos para las entradas o \textit{inputs} y este a su vez se divide en los siguientes cinco segmentos:
     
     \begin{itemize}
     \item TXID
@@ -168,7 +162,7 @@
         \caption{Los 5 segmentos de datos en una entrada o \textit{input}.}
     \end{figure}
     
-    \paragraph{TXID}
+    \subsubsection{TXID}
     
     \begin{figure}[H]
         \texttt{0x0100000001\colorbox{Yellow}{000000000000000000000000000000000000000000000}} \\
@@ -187,7 +181,7 @@
     \end{figure}
     En una transacción corriente este dato se obtiene aplicando la función hash SHA-256 dos veces a los datos de la transacción en formato \textit{Little-Endian}.
     
-    \paragraph{VOUT}
+    \subsubsection{VOUT}
     
     \begin{figure}[H]
         \texttt{0x0100000001000000000000000000000000000000000000000000000} \\
@@ -204,7 +198,7 @@
         \texttt{0xffffffff}
     \end{figure}
     
-    \paragraph{scriptSig size}
+    \subsubsection{scriptSig size}
     
     \begin{figure}[H]
         \texttt{0x0100000001000000000000000000000000000000000000000000000} \\
@@ -222,7 +216,7 @@
     \end{figure}
     En este caso el tamaño es de \texttt{0x60}, que tras convertirlo a base decimal son 96 \textit{bytes}. Para este dato existe límite de tamaño que actualmente es de 1650 \textit{bytes}.
     
-    \paragraph{scriptSig}
+    \subsubsection{scriptSig}
     
     \begin{figure}[H]
         \texttt{0x0100000001000000000000000000000000000000000000000000000} \\
@@ -279,7 +273,7 @@
     \item La segunda sección es un dato de 3 \textit{bytes} en formato \textit{Little-Endian} que representan la altura o el número del bloque al que pertenece la transacción \textit{Coinbase}, en este caso \texttt{0x636004}. La transacción \textit{Coinbase} que se ha utilizado en este ejemplo pertenece al bloque número \texttt{\#}286819 de la cadena de bloques de \textit{Bitcoin} en la red principal \textit{mainnet}. Si se convierten los 3 \textit{bytes} \texttt{0x636004} a formato \textit{Big-Endian} se obtiene el valor hexadecimal \texttt{0x046063}, que en base 10 o decimal es el número 286819 y se corresponde con el número de bloque al que pertenece esta transacción.
     \end{itemize}
     
-    \paragraph{Sequence}
+    \subsubsection{Sequence}
     
     \begin{figure}[H]
         \texttt{0x0100000001000000000000000000000000000000000000000000000} \\
@@ -300,12 +294,32 @@
     \subsection{Output}
     
     \begin{figure}[H]
+        \texttt{0x0100000001000000000000000000000000000000000000000000000} \\
+        \texttt{0000000000000000000ffffffff6003636004062f503253482f04358b} \\
+        \texttt{0553084404f253000017e446522cfabe6d6d690688fb886c0df0c87cb} \\
+        \texttt{c7ea4f7f1b5c0050bd0ac3751cfc997d9d6971328de04000000000000} \\
+        \texttt{004861707079204e592120596f7572732047486173682e494f0000000} \\
+        \texttt{0\colorbox{Yellow}{01cb813195000000001976a91480ad90d403581fa3bf46086a91b2d9}} \\
+        \texttt{\colorbox{Yellow}{d4125db6c188ac00000000}}
+    \end{figure}
+    
+    En una transacción hay un segmento de datos para las salidas u \textit{outputs} y este a su vez se divide en los siguientes cinco segmentos:
+    
+    \begin{itemize}
+    \item Output count
+    \item Output value
+    \item scriptPubKey size
+    \item scriptPubKey
+    \item Locktime
+    \end{itemize}
+    
+    \begin{figure}[H]
     \centering
         \includegraphics[scale=0.57]{img/Bitcoin_transactions_data_output.png}
         \caption{Los 5 segmentos de datos en una salida u \textit{output}.}
     \end{figure}
     
-    \subsection{Output count}
+    \subsubsection{Output count}
     
     \begin{figure}[H]
         \texttt{0x0100000001000000000000000000000000000000000000000000000} \\
@@ -322,7 +336,7 @@
         \texttt{0x01}
     \end{figure}
     
-    \subsection{Output (Value)}
+    \subsubsection{Output (Value)}
     
     \begin{figure}[H]
         \texttt{0x0100000001000000000000000000000000000000000000000000000} \\
@@ -342,7 +356,7 @@
     
     En este caso 2503049675 \textit{satoshis} son 25.03049675 \textit{bitcoins} o BTC, y como es el \textit{output} de la transacción de tipo  es la recompensa que se llevará quien mine este bloque.
     
-    \subsection{Output (scriptPubKey size)}
+    \subsubsection{Output (scriptPubKey size)}
     
     \begin{figure}[H]
         \texttt{0x0100000001000000000000000000000000000000000000000000000} \\
@@ -360,7 +374,7 @@
     \end{figure}
     En este caso el tamaño es de \texttt{0x19}, que tras convertirlo a base decimal son 25 \textit{bytes}.
     
-    \subsection{Output (scriptPubKey)}
+    \subsubsection{Output (scriptPubKey)}
     
     \begin{figure}[H]
         \texttt{0x0100000001000000000000000000000000000000000000000000000} \\
@@ -393,7 +407,7 @@
     \end{figure}
     En este escript se introducen 20 \textit{bytes} en la pila mediante el OP\_CODE \textbf{\texttt{OP\_PUSHBYTES\_20}}. Estos 20 \textit{bytes} representan la dirección a la que se ha de enviar la cantidad de \textit{satoshis} antes de aplicarle el esquema de codificación Base58\footnote{https://en.wikipedia.org/wiki/Base58}.
     
-    \subsection{Locktime}
+    \subsubsection{Locktime}
     
     \begin{figure}[H]
         \texttt{0x0100000001000000000000000000000000000000000000000000000} \\
