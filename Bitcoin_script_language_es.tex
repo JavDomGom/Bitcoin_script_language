@@ -16,11 +16,11 @@
 \definecolor{purple}{rgb}{0.65,0.03,0.69}
 \setlength\fboxsep{0pt}
 
-\title{\textbf{Lenguaje Bitcoin Script}}
+\title{\textbf{Transacciones en Bitcoin}}
 \author{Javier Domínguez Gómez \\
 \small{jdg@member.fsf.org} \\
 \small{Fingerprint: 94AD 19F4 9005 EEB2 3384 C20F 5BDC C668 D664 8E2B}}
-\date{v0.1.01 - Junio 2019}
+\date{v0.1.03 - Junio 2019}
 
 \begin{document}
 \maketitle
@@ -405,7 +405,24 @@
             \texttt{0xac} & \Rightarrow & \textbf{\texttt{OP\_CHECKSIG}}
         \end{array}$
     \end{figure}
-    En este escript se introducen 20 \textit{bytes} en la pila mediante el OP\_CODE \textbf{\texttt{OP\_PUSHBYTES\_20}}. Estos 20 \textit{bytes} representan la dirección a la que se ha de enviar la cantidad de \textit{satoshis} antes de aplicarle el esquema de codificación Base58\footnote{https://en.wikipedia.org/wiki/Base58}.
+    En este escript se introducen 20 \textit{bytes} en la pila mediante el OP\_CODE \textbf{\texttt{OP\_PUSHBYTES\_20}}. Estos 20 \textit{bytes} se obtienen en un cálculo realizado en dos pasos. En el primer paso hay que aplicar la función \textit{hash} SHA-256 a la clave pública que corresponda en cada caso. En el segundo paso al resultado anterior hay que aplicarle la función \textit{hash} RIPEMD-160.
+    \begin{figure}[H]
+    \centering
+        \texttt{RIPEMD160(SHA256(pubKey))}
+    \end{figure}
+    
+    Véase el siguiente ejemplo:
+    \begin{figure}[H]
+    \centering
+        \scriptsize{publicKey: \texttt{0240e5c8ab050d1763201ea95707fa747d01c42df7db3e8e4784c0dcba027b4af0}} \\
+        $\Downarrow$ \\
+        \scriptsize{SHA256(publicKey): \texttt{c12da6010de58147801cef8a508b1e3da7460002268751093c4e6aadcf0967a1}} \\
+        $\Downarrow$ \\
+        \scriptsize{RIPEMD160(SHA256(publicKey)): \texttt{6938581228f46c05efb6ad6f4497128f3c49f32a}}
+    \end{figure}
+    
+    
+    El resultado representa un dato que se utilizará más adelante para generar la dirección Bitcoin a la que se ha de enviar la cantidad de \textit{satoshis}. antes de añadirle un byte de versión con valor \texttt{00} y 4 bytes de \textit{checksum} por la derecha y  aplicarle el esquema de codificación Base58\footnote{https://en.wikipedia.org/wiki/Base58}.
     
     \subsubsection{Locktime}
     
