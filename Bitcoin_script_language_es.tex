@@ -405,24 +405,38 @@
             \texttt{0xac} & \Rightarrow & \textbf{\texttt{OP\_CHECKSIG}}
         \end{array}$
     \end{figure}
-    En este escript se introducen 20 \textit{bytes} en la pila mediante el OP\_CODE \textbf{\texttt{OP\_PUSHBYTES\_20}}. Estos 20 \textit{bytes} se obtienen en un cálculo realizado en dos pasos. En el primer paso hay que aplicar la función \textit{hash} SHA-256 a la clave pública que corresponda en cada caso. En el segundo paso al resultado anterior hay que aplicarle la función \textit{hash} RIPEMD-160.
+    En este escript se introducen 20 \textit{bytes} en la pila mediante el OP\_CODE \textbf{\texttt{OP\_PUSHBYTES\_20}}. Estos 20 \textit{bytes} se obtienen como resultado al realizar un cálculo en dos pasos. Véase en este ejemplo con la siguiente clave pública o \textit{pubKey} ficticia:
+    
     \begin{figure}[H]
     \centering
-        \texttt{RIPEMD160(SHA256(pubKey))}
+        \scriptsize{publicKey: \texttt{0240e5c8ab050d1763201ea95707fa747d01c42df7db3e8e4784c0dcba027b4af0}}
     \end{figure}
     
-    Véase el siguiente ejemplo:
+    \begin{enumerate}
+        \item Hay que aplicar la función \textit{hash} SHA-256 a la clave pública o \textit{pubKey}.
+        \begin{figure}[H]
+        \centering
+            \scriptsize{$\underbrace{SHA256(\texttt{0240e5c8ab050d1763201ea95707fa747d01c42df7db3e8e4784c0dcba027b4af0})}$ \\
+            \texttt{c12da6010de58147801cef8a508b1e3da7460002268751093c4e6aadcf0967a1}}
+        \end{figure}
+        
+        \item Al resultado anterior hay que aplicarle la función \textit{hash} RIPEMD-160.
+        \begin{figure}[H]
+        \centering
+            \scriptsize{$\underbrace{RIPEMD160(\texttt{c12da6010de58147801cef8a508b1e3da7460002268751093c4e6aadcf0967a1})}$ \\
+            \texttt{6938581228f46c05efb6ad6f4497128f3c49f32a}}
+        \end{figure}
+    \end{enumerate}
+    
+    Este doble cálculo \textit{hash} se puede expresar de la siguiente manera resumida:
+    
     \begin{figure}[H]
     \centering
-        \scriptsize{publicKey: \texttt{0240e5c8ab050d1763201ea95707fa747d01c42df7db3e8e4784c0dcba027b4af0}} \\
-        $\Downarrow$ \\
-        \scriptsize{SHA256(publicKey): \texttt{c12da6010de58147801cef8a508b1e3da7460002268751093c4e6aadcf0967a1}} \\
-        $\Downarrow$ \\
-        \scriptsize{RIPEMD160(SHA256(publicKey)): \texttt{6938581228f46c05efb6ad6f4497128f3c49f32a}}
+        \scriptsize{\texttt{RIPEMD160(SHA256(pubKey)) = 6938581228f46c05efb6ad6f4497128f3c49f32a}}
     \end{figure}
     
     
-    El resultado representa un dato que se utilizará más adelante para generar la dirección Bitcoin a la que se ha de enviar la cantidad de \textit{satoshis}. antes de añadirle un byte de versión con valor \texttt{00} y 4 bytes de \textit{checksum} por la derecha y  aplicarle el esquema de codificación Base58\footnote{https://en.wikipedia.org/wiki/Base58}.
+    El resultado representa un dato que se utilizará más adelante para generar la dirección Bitcoin a la que se ha de enviar la cantidad de \textit{satoshis}. Pero antes es necesario añadir un byte de versión con valor \texttt{00} por la izquierda, 4 bytes de \textit{checksum} por la derecha\footnote{https://github.com/JavierDominguezGomez/Bitcoin\_cryptography/blob/master/tools/getCheckSum.sh} y aplicarle el esquema de codificación Base58\footnote{https://en.wikipedia.org/wiki/Base58} para obtener la dirección Bitcoin final.
     
     \subsubsection{Locktime}
     
