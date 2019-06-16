@@ -244,7 +244,7 @@
         \texttt{......7Q.......(.........Happy NY! Yours GHash.IO}
     \end{figure}
     
-    Realmente esta cadena de 96 \textit{bytes} es una secuencia de instrucciones ordenadas en lenguaje \textit{Bitcoin Script} o simplemente \textit{script}. En la siguiente muestra se pueden ver los diferentes segmentos en los que se divide la cadena hexadecimal de \textit{scriptSig} en el caso concreto de esta transacción de tipo \textit{Coinbase} de ejemplo.
+    Realmente esta cadena de 96 \textit{bytes} es un \textit{script} o programa con una secuencia de instrucciones ordenadas en lenguaje \textit{Bitcoin Script} o simplemente \textit{script}. En la siguiente muestra se pueden ver los diferentes segmentos en los que se divide la cadena hexadecimal de \textit{scriptSig} en el caso concreto de esta transacción de tipo \textit{Coinbase} de ejemplo.
     
     \begin{figure}[H]
         $\begin{array}{lcl}
@@ -266,12 +266,22 @@
         \end{array}$
     \end{figure}
     
-    Para evitar que varias transacciones de tipo \textit{Coinbase} pertenecientes a diferentes bloques tengan el mismo valor en TXID se decidió implementar mediante la propuesta BIP34\footnote{https://github.com/bitcoin/bips/blob/master/bip-0034.mediawiki} un sistema que añade al inicio del valor de \textit{scriptSig} un bloque de 4 \textit{bytes}, dividido en dos secciones:
+    Este \textit{script} introducirá diferentes datos en una pila que inicialmente está vacía. Para evitar que varias transacciones de tipo \textit{Coinbase} pertenecientes a diferentes bloques tengan el mismo valor en TXID se decidió implementar mediante la propuesta BIP34\footnote{https://github.com/bitcoin/bips/blob/master/bip-0034.mediawiki} un sistema que añade al inicio del \textit{script} un bloque de 4 \textit{bytes}, dividido en las siguientes dos secciones:
     
     \begin{itemize}
     \item La primera es una constante\footnote{https://en.bitcoin.it/wiki/Script\#Constants} de 1 \textit{byte} de longitud que representa un OP\_CODE, en este caso con valor \texttt{0x03}, e indica que el siguiente dato que se va a colocar en la pila tiene una longitud de 3 \textit{bytes}. Para ello se utiliza el OP\_CODE \textbf{\texttt{OP\_PUSHBYTES\_3}}.
     \item La segunda sección es un dato de 3 \textit{bytes} en formato \textit{Little-Endian} que representan la altura o el número del bloque al que pertenece la transacción \textit{Coinbase}, en este caso \texttt{0x636004}. La transacción \textit{Coinbase} que se ha utilizado en este ejemplo pertenece al bloque número \texttt{\#}286819 de la cadena de bloques de \textit{Bitcoin} en la red principal \textit{mainnet}. Si se convierten los 3 \textit{bytes} \texttt{0x636004} a formato \textit{Big-Endian} se obtiene el valor hexadecimal \texttt{0x046063}, que en base 10 o decimal es el número 286819 y se corresponde con el número de bloque al que pertenece esta transacción.
     \end{itemize}
+    
+    \begin{minipage}{0.45\textwidth}
+        \includegraphics[scale=0.57]{img/Bitcoin_transactions_stack_01.png}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.45\textwidth}
+        Así pues, mediante la instrucción \textbf{\texttt{OP\_PUSHBYTES\_3}} se añaden los siguientes 3 \textit{bytes} a la pila.
+    \end{minipage}
+    
+    
     
     \subsubsection{Sequence}
     
@@ -386,13 +396,13 @@
         \texttt{\colorbox{Yellow}{d4125db6c188ac}00000000}
     \end{figure}
     
-    Es un dato de longitud variable, en este caso tiene una longitud de 25 \textit{bytes} pero podría contener más o menos información. Se trata de un \textit{script} también llamado \textit{locking script} que implementa un mecanismo de bloqueo para un \textit{output} o salida, de modo que esta no pueda ser gastada hasta que no se desbloquee tras cumplirse una serie de condiciones, la mayoría de la veces ser el poseedor de la clave privada que puede desbloquear el \textit{script} en el que se utiliza una clave pública.
+    Es un dato de longitud variable, en este caso de 25 \textit{bytes}, pero podría contener más o menos información. Se trata de un \textit{script} también llamado \textit{locking script} que implementa un mecanismo de bloqueo para un \textit{output} o salida, de modo que esta no pueda ser gastada hasta que no se desbloquee tras cumplirse una serie de condiciones, la mayoría de la veces ser el poseedor de la clave privada que puede desbloquear el \textit{script} en el que se utiliza una clave pública.
     
     \begin{figure}[H]
         \texttt{0x76a91480ad90d403581fa3bf46086a91b2d9d4125db6c188ac}
     \end{figure}
     
-    Esta cadena de 25 \textit{bytes}, el igual que \textit{scriptSig} es una secuencia de instrucciones ordenadas en lenguaje \textit{Bitcoin Script} o simplemente \textit{script}. En la siguiente muestra se pueden ver los diferentes segmentos en los que se divide la cadena hexadecimal de \textit{scriptPubKey} en el caso concreto de esta transacción de tipo \textit{Coinbase} de ejemplo.
+    Esta cadena de 25 \textit{bytes}, al igual que \textit{scriptSig} es una secuencia de instrucciones ordenadas en lenguaje \textit{Bitcoin Script} o simplemente \textit{script}. En la siguiente muestra se pueden ver los diferentes segmentos en los que se divide la cadena hexadecimal de \textit{scriptPubKey} en el caso concreto de esta transacción de tipo \textit{Coinbase} de ejemplo.
     
     \begin{figure}[H]
         $\begin{array}{lcl}
@@ -428,7 +438,7 @@
         \end{figure}
     \end{enumerate}
     
-    Este doble cálculo \textit{hash} se puede expresar de la siguiente manera resumida:
+    Este doble cálculo \textit{hash} se puede expresar mediante el siguiente resumen:
     
     \begin{figure}[H]
     \centering
