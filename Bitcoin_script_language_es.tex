@@ -272,28 +272,40 @@
     
     \noindent
     \begin{minipage}{0.50\textwidth}
-        \includegraphics[scale=0.55]{img/Bitcoin_transactions_stack_01.png}
+        \begin{figure}[H]
+        \centering
+            \includegraphics[scale=0.57]{img/Bitcoin_transactions_stack_01.png}
+            \caption{Pila vacía más 3 \textit{bytes}}
+        \end{figure}
     \end{minipage}
     \hfill
     \begin{minipage}{0.50\textwidth}
-        de 3 \textit{bytes}. Para ello se utiliza el OP\_CODE \textbf{\texttt{OP\_PUSHBYTES\_3}}. La segunda sección es un dato de 3 \textit{bytes} en formato \textit{Little-Endian} que representan la altura o el número del bloque al que pertenece la transacción \textit{Coinbase}, en este caso \texttt{0x636004}. La transacción \textit{Coinbase} que se ha utilizado en este ejemplo pertenece al bloque número \texttt{\#}286819 de la cadena de bloques de \textit{Bitcoin} en la red principal \textit{mainnet}. Si se convierten los 3 \textit{bytes} \texttt{0x636004} a formato \textit{Big-Endian} se obtiene el valor hexadecimal \texttt{0x046063}, que en base 10 o decimal es el número 286819 y se corresponde con el número de bloque al que pertenece esta transacción de ejemplo. Así pues, mediante la instrucción \textbf{\texttt{OP\_PUSHBYTES\_3}} se añaden los siguientes 3 \textit{bytes} a la pila.
+        de 3 \textit{bytes}. Para ello se utiliza el OP\_CODE \textbf{\texttt{OP\_PUSHBYTES\_3}}. La segunda sección es un dato de 3 \textit{bytes} en formato \textit{Little-Endian} que representan la altura o el número del bloque al que pertenece la transacción \textit{Coinbase}, en este caso \texttt{0x636004}. La transacción \textit{Coinbase} que se ha utilizado en este ejemplo pertenece al bloque número \texttt{\#}286819 de la cadena de bloques de \textit{Bitcoin} en la red principal \textit{mainnet}. Si se convierten los 3 \textit{bytes} \texttt{0x636004} a formato \textit{Big-Endian} se obtiene el valor hexadecimal \texttt{0x046063}, que en base 10 o decimal es el número 286819 y se corresponde con el número de bloque al que pertenece esta transacción de ejemplo. Así pues, mediante la instrucción \textbf{\texttt{OP\_PUSHBYTES\_3}} se añaden los siguientes 3 \textit{bytes} a la pila, tal y como se muestra en la figura 2.
     \end{minipage}
     
     \vspace{1mm}
     
     $\\$
     
-    A continuación de los 3 \textit{bytes} que ya se han añadido en el fondo de la pila, se encuentra 1 \textit{byte} que representa otro OP\_CODE, en este caso \textbf{\texttt{OP\_PUSHBYTES\_6}} con valor \texttt{0x06}. Esta operación va a introducir en la pila los siguientes 6 \textit{bytes} que se encuentran a continuación del \textit{byte} \texttt{0x06}, es decir, \texttt{0x2f503253482f}.
+    A continuación de los 3 \textit{bytes} que ya se han añadido en el fondo de la pila, se encuentra 1 \textit{byte} que representa otro OP\_CODE, en este caso \textbf{\texttt{OP\_PUSHBYTES\_6}} con valor \texttt{0x06}. Esta operación va a introducir en la pila los siguientes 6 \textit{bytes} que se encuentran a continuación del \textit{byte} \texttt{0x06}, es decir, \texttt{0x2f503253482f}, tal y como se muestra en la figura 3. El siguiente \textit{byte} tiene valor \texttt{0x04} y representa el OP\_CODE \textbf{\texttt{OP\_PUSHBYTES\_4}}. Este añade los siguientes 4 \textit{bytes} a la pila, \texttt{0x358b0553}, tal y como se muestra en la figura 4.
     
     \vspace{1mm}
     \noindent
-    \begin{minipage}{0.45\textwidth}
-        de 3 \textit{bytes}. Para ello se utiliza el OP\_CODE \textbf{\texttt{OP\_PUSHBYTES\_3}}. La segunda sección es un dato de 3 \textit{bytes} en formato \textit{Little-Endian} que representan la altura o el número del bloque al que pertenece la transacción \textit{Coinbase}, en este caso \texttt{0x636004}. La transacción \textit{Coinbase} que se ha utilizado en este ejemplo pertenece al bloque número \texttt{\#}286819 de la cadena de bloques de \textit{Bitcoin} en la red principal \textit{mainnet}. Si se convierten los 3 \textit{bytes} \texttt{0x636004} a formato \textit{Big-Endian} se obtiene el valor hexadecimal \texttt{0x046063}, que en base 10 o decimal es el número 286819 y se corresponde con el número de bloque al que pertenece esta transacción de ejemplo. Así pues, mediante la instrucción \textbf{\texttt{OP\_PUSHBYTES\_3}} se añaden los siguientes 3 \textit{bytes} a la pila.
+    \begin{minipage}{0.50\textwidth}
+        \begin{figure}[H]
+        \centering
+            \includegraphics[scale=0.57]{img/Bitcoin_transactions_stack_02.png}
+            \caption{Pila más 6 \textit{bytes}}
+        \end{figure}
     \end{minipage}
     \hfill
     \noindent
     \begin{minipage}{0.50\textwidth}
-        \includegraphics[scale=0.55]{img/Bitcoin_transactions_stack_02.png}
+        \begin{figure}[H]
+        \centering
+            \includegraphics[scale=0.57]{img/Bitcoin_transactions_stack_03.png}
+            \caption{Pila más 4 \textit{bytes}}
+        \end{figure}
     \end{minipage}
     
     \subsubsection{Sequence}
