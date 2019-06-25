@@ -275,7 +275,7 @@
         \begin{figure}[H]
         \centering
             \includegraphics[scale=0.57]{img/Bitcoin_transactions_stack_01.png}
-            \caption{Pila vacía más 3 \textit{bytes}}
+            \caption{Adición de 3 \textit{bytes} a pila.}
         \end{figure}
     \end{minipage}
     \hfill
@@ -285,9 +285,7 @@
     
     \vspace{1mm}
     
-    $\\$
-    
-    A continuación de los 3 \textit{bytes} que ya se han añadido en el fondo de la pila, se encuentra 1 \textit{byte} que representa otro OP\_CODE, en este caso \textbf{\texttt{OP\_PUSHBYTES\_6}} con valor \texttt{0x06}. Esta operación va a introducir en la pila los siguientes 6 \textit{bytes} que se encuentran a continuación del \textit{byte} \texttt{0x06}, es decir, \texttt{0x2f503253482f}, tal y como se muestra en la figura 3. El siguiente \textit{byte} tiene valor \texttt{0x04} y representa el OP\_CODE \textbf{\texttt{OP\_PUSHBYTES\_4}}. Este añade los siguientes 4 \textit{bytes} a la pila, \texttt{0x358b0553}, tal y como se muestra en la figura 4.
+    A continuación de los 3 \textit{bytes} que ya se han añadido en el fondo de la pila, se encuentra 1 \textit{byte} que representa otro OP\_CODE, en este caso \textbf{\texttt{OP\_PUSHBYTES\_6}} con valor \texttt{0x06}. Esta operación va a introducir en la pila los siguientes 6 \textit{bytes} que se encuentran a continuación del \textit{byte} \texttt{0x06}, es decir, \texttt{0x2f503253482f}, tal y como se muestra en la figura 3.
     
     \vspace{1mm}
     \noindent
@@ -295,7 +293,7 @@
         \begin{figure}[H]
         \centering
             \includegraphics[scale=0.57]{img/Bitcoin_transactions_stack_02.png}
-            \caption{Pila más 6 \textit{bytes}}
+            \caption{Adición de 6 \textit{bytes} a pila.}
         \end{figure}
     \end{minipage}
     \hfill
@@ -304,9 +302,35 @@
         \begin{figure}[H]
         \centering
             \includegraphics[scale=0.57]{img/Bitcoin_transactions_stack_03.png}
-            \caption{Pila más 4 \textit{bytes}}
+            \caption{Adición de 4 \textit{bytes} a pila.}
         \end{figure}
     \end{minipage}
+    
+    $\\$
+    
+    El siguiente \textit{byte} tiene valor \texttt{0x04} y representa el OP\_CODE \textbf{\texttt{OP\_PUSHBYTES\_4}}. Este añade los siguientes 4 \textit{bytes} a la pila, \texttt{0x358b0553}, tal y como se muestra en la figura 4. Después viene otro \textit{byte} que tiene como valor \texttt{0x08} y representa el OP\_CODE \textbf{\texttt{OP\_PUSHBYTES\_8}}, de igual manera que los anteriores OP\_CODES este añadirá los siguientes 8 \textit{bytes} dentro de la pila, tal y como se muestra en la figura 5.
+    
+    \vspace{1mm}
+    \noindent
+    \begin{minipage}{0.50\textwidth}
+        \begin{figure}[H]
+        \centering
+            \includegraphics[scale=0.57]{img/Bitcoin_transactions_stack_05.png}
+            \caption{Adición de 6 \textit{bytes} a pila.}
+        \end{figure}
+    \end{minipage}
+    \hfill
+    \noindent
+    \begin{minipage}{0.50\textwidth}
+        \begin{figure}[H]
+        \centering
+            \includegraphics[scale=0.57]{img/Bitcoin_transactions_stack_06.png}
+            \caption{Adición de 4 \textit{bytes} a pila.}
+        \end{figure}
+    \end{minipage}
+    
+    $\\$
+    
     
     \subsubsection{Sequence}
     
