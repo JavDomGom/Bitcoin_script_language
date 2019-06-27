@@ -234,7 +234,6 @@
         \texttt{fabe6d6d690688fb886c0df0c87cbc7ea4f7f1b5c0050bd0ac3751cfc9}
         \texttt{97d9d6971328de04000000000000004861707079204e592120596f7572}
         \texttt{732047486173682e494f}
-        
     \end{figure}
     
     En una representación de carácteres ASCII se vería de la siguiente forma:
@@ -274,7 +273,7 @@
     \begin{minipage}{0.50\textwidth}
         \begin{figure}[H]
         \centering
-            \includegraphics[scale=0.57]{img/Bitcoin_transactions_stack_01.png}
+            \includegraphics[scale=0.49]{img/Bitcoin_transactions_stack_01.png}
             \caption{Adición de 3 \textit{bytes} a pila.}
         \end{figure}
     \end{minipage}
@@ -292,7 +291,7 @@
     \begin{minipage}{0.50\textwidth}
         \begin{figure}[H]
         \centering
-            \includegraphics[scale=0.57]{img/Bitcoin_transactions_stack_02.png}
+            \includegraphics[scale=0.49]{img/Bitcoin_transactions_stack_02.png}
             \caption{Adición de 6 \textit{bytes} a pila.}
         \end{figure}
     \end{minipage}
@@ -301,22 +300,22 @@
     \begin{minipage}{0.50\textwidth}
         \begin{figure}[H]
         \centering
-            \includegraphics[scale=0.57]{img/Bitcoin_transactions_stack_03.png}
+            \includegraphics[scale=0.49]{img/Bitcoin_transactions_stack_03.png}
             \caption{Adición de 4 \textit{bytes} a pila.}
         \end{figure}
     \end{minipage}
     
     $\\$
     
-    El siguiente \textit{byte} tiene valor \texttt{0x04} y representa el OP\_CODE \textbf{\texttt{OP\_PUSHBYTES\_4}}. Este añade los siguientes 4 \textit{bytes} a la pila, \texttt{0x358b0553}, tal y como se muestra en la figura 4. Después viene otro \textit{byte} que tiene como valor \texttt{0x08} y representa el OP\_CODE \textbf{\texttt{OP\_PUSHBYTES\_8}}, de igual manera que los anteriores OP\_CODES este añadirá los siguientes 8 \textit{bytes} dentro de la pila, tal y como se muestra en la figura 5.
+    El siguiente \textit{byte} tiene valor \texttt{0x04}, es el OP\_CODE \textbf{\texttt{OP\_PUSHBYTES\_4}}. Este añade los siguientes 4 \textit{bytes} a la pila, \texttt{0x358b0553}, tal y como se muestra en la figura 4. Después viene otro \textit{byte} que tiene como valor \texttt{0x08} y representa el OP\_CODE \textbf{\texttt{OP\_PUSHBYTES\_8}}, de igual manera que los anteriores OP\_CODES este añadirá los siguientes 8 \textit{bytes} dentro de la pila, tal y como se muestra en la figura 5.
     
     \vspace{1mm}
     \noindent
     \begin{minipage}{0.50\textwidth}
         \begin{figure}[H]
         \centering
-            \includegraphics[scale=0.57]{img/Bitcoin_transactions_stack_05.png}
-            \caption{Adición de 6 \textit{bytes} a pila.}
+            \includegraphics[scale=0.49]{img/Bitcoin_transactions_stack_04.png}
+            \caption{Adición de 8 \textit{bytes} a pila.}
         \end{figure}
     \end{minipage}
     \hfill
@@ -324,13 +323,16 @@
     \begin{minipage}{0.50\textwidth}
         \begin{figure}[H]
         \centering
-            \includegraphics[scale=0.57]{img/Bitcoin_transactions_stack_06.png}
-            \caption{Adición de 4 \textit{bytes} a pila.}
+            \includegraphics[scale=0.49]{img/Bitcoin_transactions_stack_05.png}
+            \caption{Adición de 70 \textit{bytes} a pila.}
         \end{figure}
     \end{minipage}
     
     $\\$
     
+    El siguiente \textit{byte} tiene valor \texttt{0x46}, es el OP\_CODE \textbf{\texttt{OP\_PUSHBYTES\_70}} (el número hexadecimal 46 en base 10 o decimal es 70). Este añade los siguientes 70 \textit{bytes} a la pila, \texttt{0x522cfabe6d6d690688fb886c0df0c87cbc7ea4f7f1b5c}
+    \texttt{0050bd0ac3751cfc997d9d6971328de040000000000000048617070792}
+    \texttt{04e592120596f7572732047486173682e494f}, tal y como se muestra en la figura 6. Estos 70 \textit{bytes} son la clave pública generada a partir de una clave privada, y que posteriormente se utilizará para obtener la dirección Bitcoin a la que se ha de transferir el monto de la transacción.
     
     \subsubsection{Sequence}
     
