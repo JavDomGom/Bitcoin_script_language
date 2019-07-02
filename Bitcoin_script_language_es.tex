@@ -478,8 +478,10 @@
     \hfill
     \noindent
     \begin{minipage}{0.50\textwidth}
-        
+        El primer segmento es el \textit{byte} \texttt{0x76} y representa el OP\_CODE \textbf{\texttt{OP\_DUP}}, cuya finalidad es duplicar el elemento ubicado en la cima de la pila. En este caso en la cima de la pila se encuentran los 70 \textit{bytes} introducidos mediante la ejecución del \textit{script} del segmento de datos correspondiente a \textit{scriptSig} (punto 3.3.4, Figura 6).
     \end{minipage}
+    
+    $\\$
     
     En este escript se introducen 20 \textit{bytes} en la pila mediante el OP\_CODE \textbf{\texttt{OP\_PUSHBYTES\_20}}. Estos 20 \textit{bytes} se obtienen como resultado al realizar un cálculo en dos pasos. Véase en este ejemplo con la siguiente clave pública o \textit{pubKey} ficticia:
     
