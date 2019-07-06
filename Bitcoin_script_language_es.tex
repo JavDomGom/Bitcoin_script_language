@@ -478,7 +478,7 @@
     \hfill
     \noindent
     \begin{minipage}{0.50\textwidth}
-        El primer segmento es el \textit{byte} \texttt{0x76} y representa el OP\_CODE \textbf{\texttt{OP\_DUP}}, cuya finalidad es duplicar el elemento ubicado en la cima de la pila. En este caso en la cima de la pila se encuentran los 70 \textit{bytes} introducidos mediante la ejecución del \textit{script} del segmento de datos correspondiente a \textit{scriptSig} (punto 3.3.4, Figura 6).
+        Al incio de esta cadena de \textit{bytes} se encuentra el \textit{byte} \texttt{0x76} y representa el OP\_CODE \textbf{\texttt{OP\_DUP}}, cuya finalidad es duplicar el elemento ubicado en la cima de la pila. En este caso en la cima de la pila se encuentran los 70 \textit{bytes} introducidos anteriormente mediante la ejecución del \textit{script} del segmento de datos correspondiente a \textit{scriptSig}, visto en el punto 3.3.4 de este documento, en la Figura 6. El siguiente \textit{byte} tiene por valor \texttt{0xa9} y OP\_CODE \textbf{\texttt{OP\_HASH160}}. Este OP\_CODE aplica un esquema 
     \end{minipage}
     
     $\\$
