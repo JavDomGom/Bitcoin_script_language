@@ -478,7 +478,29 @@
     \hfill
     \noindent
     \begin{minipage}{0.50\textwidth}
-        Al incio de esta cadena de \textit{bytes} se encuentra el \textit{byte} \texttt{0x76} y representa el OP\_CODE \textbf{\texttt{OP\_DUP}}, cuya finalidad es duplicar el elemento ubicado en la cima de la pila. En este caso en la cima de la pila se encuentran los 70 \textit{bytes} introducidos anteriormente mediante la ejecución del \textit{script} del segmento de datos correspondiente a \textit{scriptSig}, visto en el punto 3.3.4 de este documento, en la Figura 6. El siguiente \textit{byte} tiene por valor \texttt{0xa9} y OP\_CODE \textbf{\texttt{OP\_HASH160}}. Este OP\_CODE aplica un esquema 
+        Al incio de esta cadena de \textit{bytes} se encuentra el \textit{byte} \texttt{0x76} y representa el OP\_CODE \textbf{\texttt{OP\_DUP}}, cuya finalidad es duplicar el elemento ubicado en la cima de la pila. En este caso en la cima de la pila se encuentran los 70 \textit{bytes} correspondientes a una clave pública, introducidos anteriormente mediante la ejecución del \textit{script} del segmento de datos correspondiente a \textit{scriptSig}, visto en el punto 3.3.4 de este documento, en la Figura 6. El siguiente \textit{byte} tiene por valor \texttt{0xa9}, que representa al OP\_CODE \textbf{\texttt{OP\_HASH160}}. Este OP\_CODE recibe como dato de entrada el dato que se encuentra en este momento en la cima de la pila, es decir, la clave pública que se acaba de duplicar recientemente. A continuación procesa el dato de entrada en dos pasos, en primer lugar aplica a mensaje de entrada \ la función \ SHA-256 y
+    \end{minipage}
+    
+    \vspace{1mm}
+    \noindent
+    después la función RIPEMD-160, obteniendo finalmente un \textit{hash} con una tamaño de 20 \textit{bytes} que sustituirá al dato de entrada de la pila, tal y como se muestra en la Figura 9.
+    
+    \noindent
+    \begin{minipage}{0.50\textwidth}
+        \begin{figure}[H]
+        \centering
+            \includegraphics[scale=0.49]{img/Bitcoin_transactions_stack_07.png}
+            \caption{\textit{Hash} de la clave pública.}
+        \end{figure}
+    \end{minipage}
+    \hfill
+    \noindent
+    \begin{minipage}{0.50\textwidth}
+        \begin{figure}[H]
+        \centering
+            \includegraphics[scale=0.49]{img/Bitcoin_transactions_stack_08.png}
+            \caption{Adición de 70 \textit{bytes} a pila.}
+        \end{figure}
     \end{minipage}
     
     $\\$
