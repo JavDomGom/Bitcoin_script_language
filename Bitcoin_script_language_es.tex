@@ -505,6 +505,24 @@
     
     $\\$
     
+    A continuación se tiene un \textit{byte} con valor \texttt{0x14} y representa el OP\_CODE \textbf{\texttt{OP\_PUSHBYTES\_20}}. Este introduce en a la pila los siguientes 20 \textit{bytes} que vienen a continuación en el segmento de datos \textit{scriptPubKey}, tal y como se muestra en la Figura 10
+    
+    \noindent
+    \begin{minipage}{0.50\textwidth}
+        xxx
+    \end{minipage}
+    \hfill
+    \noindent
+    \begin{minipage}{0.50\textwidth}
+        \begin{figure}[H]
+        \centering
+            \includegraphics[scale=0.49]{img/Bitcoin_transactions_stack_09.png}
+            \caption{Adición de 20 \textit{bytes} a pila.}
+        \end{figure}
+    \end{minipage}
+    
+    $\\$
+    
     En este escript se introducen 20 \textit{bytes} en la pila mediante el OP\_CODE \textbf{\texttt{OP\_PUSHBYTES\_20}}. Estos 20 \textit{bytes} se obtienen como resultado al realizar un cálculo en dos pasos. Véase en este ejemplo con la siguiente clave pública o \textit{pubKey} ficticia:
     
     \begin{figure}[H]
