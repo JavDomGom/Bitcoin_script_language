@@ -505,19 +505,24 @@
     
     $\\$
     
-    A continuación se tiene un \textit{byte} con valor \texttt{0x14} y representa el OP\_CODE \textbf{\texttt{OP\_PUSHBYTES\_20}}. Este introduce en a la pila los siguientes 20 \textit{bytes} que vienen a continuación en el segmento de datos \textit{scriptPubKey}, tal y como se muestra en la Figura 10
+    A continuación se tiene un \textit{byte} con valor \texttt{0x14} que representa el OP\_CODE \textbf{\texttt{OP\_PUSHBYTES\_20}}. Este introduce en a la pila los siguientes 20 \textit{bytes} se encuentran en el segmento de datos \textit{scriptPubKey}, tal y como se muestra en la Figura 10. El siguiente \textit{byte} tiene valor \texttt{0x88} y representa el OP\_CODE \textbf{\texttt{OP\_EQUALVERIFY}}. Se encargará de comprobar si los dos elementos que se encuentran en la cima de la pila son exactamente iguales, en cuyo caso marca la transacción como válida y elimina sendos elementos de la pila. Si se diera el caso de que los dos elementos de la cima de la pila no fueran iguales, la transacción se marca como no válida y se eliminan los dos elementos igualmente.
     
+    \vspace{1mm}
     \noindent
     \begin{minipage}{0.50\textwidth}
-        xxx
+        \begin{figure}[H]
+        \centering
+            \includegraphics[scale=0.49]{img/Bitcoin_transactions_stack_09.png}
+            \caption{Comprobación de igualdad.}
+        \end{figure}
     \end{minipage}
     \hfill
     \noindent
     \begin{minipage}{0.50\textwidth}
         \begin{figure}[H]
         \centering
-            \includegraphics[scale=0.49]{img/Bitcoin_transactions_stack_09.png}
-            \caption{Adición de 20 \textit{bytes} a pila.}
+            \includegraphics[scale=0.49]{img/Bitcoin_transactions_stack_10.png}
+            \caption{Comprobación de igualdad.}
         \end{figure}
     \end{minipage}
     
