@@ -528,38 +528,7 @@
     
     $\\$
     
-    En este escript se introducen 20 \textit{bytes} en la pila mediante el OP\_CODE \textbf{\texttt{OP\_PUSHBYTES\_20}}. Estos 20 \textit{bytes} se obtienen como resultado al realizar un cálculo en dos pasos. Véase en este ejemplo con la siguiente clave pública o \textit{pubKey} ficticia:
-    
-    \begin{figure}[H]
-    \centering
-        \scriptsize{publicKey: \texttt{0240e5c8ab050d1763201ea95707fa747d01c42df7db3e8e4784c0dcba027b4af0}}
-    \end{figure}
-    
-    \begin{enumerate}
-        \item Hay que aplicar la función \textit{hash} SHA-256 a la clave pública o \textit{pubKey}.
-        \begin{figure}[H]
-        \centering
-            \scriptsize{$\underbrace{SHA256(\texttt{0240e5c8ab050d1763201ea95707fa747d01c42df7db3e8e4784c0dcba027b4af0})}$ \\
-            \texttt{c12da6010de58147801cef8a508b1e3da7460002268751093c4e6aadcf0967a1}}
-        \end{figure}
-        
-        \item Al resultado anterior hay que aplicarle la función \textit{hash} RIPEMD-160.
-        \begin{figure}[H]
-        \centering
-            \scriptsize{$\underbrace{RIPEMD160(\texttt{c12da6010de58147801cef8a508b1e3da7460002268751093c4e6aadcf0967a1})}$ \\
-            \texttt{6938581228f46c05efb6ad6f4497128f3c49f32a}}
-        \end{figure}
-    \end{enumerate}
-    
-    Este doble cálculo \textit{hash} se puede expresar mediante el siguiente resumen:
-    
-    \begin{figure}[H]
-    \centering
-        \scriptsize{\texttt{RIPEMD160(SHA256(pubKey)) = 6938581228f46c05efb6ad6f4497128f3c49f32a}}
-    \end{figure}
-    
-    
-    El resultado representa un dato que se utilizará más adelante para generar la dirección Bitcoin a la que se ha de enviar la cantidad de \textit{satoshis}. Pero antes es necesario añadir un byte de versión con valor \texttt{00} por la izquierda, 4 bytes de \textit{checksum} por la derecha\footnote{https://github.com/JavierDominguezGomez/Bitcoin\_cryptography/blob/master/tools/getCheckSum.sh} y aplicarle el esquema de codificación Base58\footnote{https://en.wikipedia.org/wiki/Base58} para obtener la dirección Bitcoin final.
+    Por último se tiene un \textit{byte} con valor \texttt{0xac} que representa el OP\_CODE \textbf{\texttt{OP\_CHECKSIG}}. Este OP\_CODE toma los elementos de la pila correspondientes a \textit{scriptSig} y los usa para firmar la clave pública que en este momento se encuentra en la cima de la pila. Si todo va bien y la firma es válida se vacía procede al pago de la transacción en la dirección Bitcoin especificada y se vacía la pila.
     
     \subsubsection{Locktime}
     
