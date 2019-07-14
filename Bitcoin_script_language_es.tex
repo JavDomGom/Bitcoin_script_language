@@ -66,7 +66,7 @@
     }
     \end{figure}
 
-\section{Transacción \textit{Coinbase}}
+\section{Estructura de una transacción}
     En el protocolo Bitcoin todos los bloques de la cadena de bloques contienen la misma estructura de datos para almacenar la información segmentada y ordenada en diferentes partes. La transacción \textit{Coinbase} es la primera transacción de cada bloque, es un espacio reservado para almacenar información relativa a la recompensa final por minar el bloque candidato y toda la información sobre comisiones adicionales en cada una de las transacciones que conformarán finalmente el bloque. Siguiendo con el ejemplo del bloque \texttt{\#}286819, podremos encontrar el inicio de la transacción \textit{Coinbase} a partir del \textit{byte} número 93.725.215, en el \textit{offset} \texttt{0x0596221f}, y en este caso abarca los siguientes 181 \textit{bytes} tal y como se muestra a continuación.
     \begin{figure}[H]
     \scriptsize{\texttt{$\sim$/.bitcoin/blocks/\$ hexdump\ -C\ -s\ 93725215\ -n\ 181\ blk00116.dat}}
@@ -528,7 +528,7 @@
     
     $\\$
     
-    Por último se tiene un \textit{byte} con valor \texttt{0xac} que representa el OP\_CODE \textbf{\texttt{OP\_CHECKSIG}}. Este OP\_CODE toma los elementos de la pila correspondientes a \textit{scriptSig} y los usa para firmar la clave pública que en este momento se encuentra en la cima de la pila. Si todo va bien y la firma es válida se vacía procede al pago de la transacción en la dirección Bitcoin especificada y se vacía la pila.
+    Por último se tiene un \textit{byte} con valor \texttt{0xac} que representa el OP\_CODE \textbf{\texttt{OP\_CHECKSIG}}. Este OP\_CODE toma los elementos de la pila correspondientes a \textit{scriptSig} y los usa para firmar la clave pública que en este momento se encuentra en la cima de la pila. Si todo va bien y la firma es válida se vacía procede al pago de la transacción en la dirección Bitcoin especificada y por último se vacía la pila.
     
     \subsubsection{Locktime}
     
@@ -547,6 +547,6 @@
         \texttt{0x00000000}
     \end{figure}
     
-    La mayoría de las transacciones no utilizan el tiempo de bloqueo, por lo que suele establecer su valor a \texttt{0x00000000}. Por el contrario, se puede utilizar para asegurarse de que una transacción rmanecerápe bloqueada por un tiempo específico o hasta que no se llegue a una altura de bloque indicado.
+    La mayoría de las transacciones no utilizan el tiempo de bloqueo, por lo que suele establecer su valor a \texttt{0x00000000}. Por el contrario, se puede utilizar para asegurarse de que una transacción permanece bloqueada por un tiempo específico o hasta que no se llegue a una altura de bloque indicado.
     
 \end{document}
