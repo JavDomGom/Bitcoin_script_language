@@ -75,13 +75,15 @@ En la columna izquierda se encuentra el \textit{offset} correspondiente a cada l
 Para profundizar más en detalle sobre la estructura de datos de un bloque de la cadena de bloques de Bitcoin es recomendable consultar el apartado 2 del documento \textit{Criptografía aplicada: Cálculo del hash SHA-256 de un bloque Bitcoin}\footnote{https://github.com/JavierDominguezGomez/Bitcoin\_cryptography/blob/master/Bitcoin\_block\_SHA\_256\_es.pdf}.
 
 \section{Estructura de datos de una transacción}
-    En el protocolo Bitcoin todos los bloques de la cadena de bloques contienen la misma estructura de datos para almacenar la información segmentada y ordenada en diferentes partes. De todas las partes de las que se compone el bloque las transacciones son el segmento de datos más importante, la esencia de Bitcoin. A continuación se muestra un esquema de ejemplo en el que se puede ver la estructura de datos de une transacción en el que hay un \textit{input} y dos \textit{outputs}.
+    En el protocolo Bitcoin todos los bloques de la cadena de bloques contienen la misma estructura de datos para almacenar la información segmentada y ordenada en diferentes partes. Las transacciones son el segmento de datos más importante, es donde se ejecutarán sencillos programas o \textit{scripts} que se encargarán de comprobar los saldos disponibles, firma de claves, comprobar la autenticación de las mismas y procesar el envío de saldo entre pares mediante el uso de criptografía de clave pública o asimétrica, la esencia de Bitcoin. A continuación se muestra un esquema de ejemplo en el que se puede ver la estructura de datos de une transacción en el que hay un \textit{input} y dos \textit{outputs}.
     
     \begin{figure}[H]
     \centering
         \includegraphics[scale=0.59]{img/Bitcoin_transactions_data_schema.png}
         \caption{Transacción con un \textit{input} y dos \textit{outputs}.}
     \end{figure}
+    
+    En la siguiente imagen se muestra en detalle cada una de las partes que componen los segmentos de datos correspondientes a un \textit{input} y a un \textit{output}.
     
     \begin{figure}[H]
     \centering
